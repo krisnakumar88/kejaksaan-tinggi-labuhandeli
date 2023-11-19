@@ -31,3 +31,11 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admin-dashboard')->middleware('auth');
 Route::resource('/admin/berita', BeritaController::class);
+
+/*
+============================ Routes Pejabat Struktural ============================
+*/
+Route::get('/berita', [FrontController::class,'berita'])->name('front_berita');
+/*
+============================ Routes Pejabat Struktural ============================
+*/

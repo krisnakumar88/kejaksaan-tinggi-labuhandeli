@@ -66,6 +66,45 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPejabat"
+            aria-expanded="true" aria-controls="dataPejabat">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Pejabat Struktural</span>
+        </a>
+        <div id="dataPejabat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('berita.index') }}">Berita</a>
+                <a class="collapse-item" href="/">Kategori Berita</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataDaftarpencarian"
+            aria-expanded="true" aria-controls="dataDaftarpencarian">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Daftar Pencarian</span>
+        </a>
+        <div id="dataDaftarpencarian" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('berita.index') }}">Berita</a>
+                <a class="collapse-item" href="/">Kategori Berita</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataSitus"
+            aria-expanded="true" aria-controls="dataSitus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Situs Terkait</span>
+        </a>
+        <div id="dataSitus" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('berita.index') }}">Berita</a>
+                <a class="collapse-item" href="/">Kategori Berita</a>
+            </div>
+        </div>
+    </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     {{-- <li class="nav-item">
