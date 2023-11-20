@@ -74,7 +74,7 @@
         </a>
         <div id="dataPejabat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('berita.index') }}">Berita</a>
+                <a class="collapse-item" href="{{ route('pejabatstruktural.index') }}">Pejabat Struktural</a>
                 <a class="collapse-item" href="/">Kategori Berita</a>
             </div>
         </div>

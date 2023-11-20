@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PejabatstrukturalController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,7 @@ Route::resource('/admin/berita', BeritaController::class);
 /*
 ============================ Routes Pejabat Struktural ============================
 */
-Route::get('/berita', [FrontController::class,'berita'])->name('front_berita');
+Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
 /*
 ============================ Routes Pejabat Struktural ============================
 */

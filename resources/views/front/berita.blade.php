@@ -43,7 +43,7 @@
                                             {{ route('berita_detail', $data->slug) }} {{ $data->judul }}
                                         </p>
                                         <a
-                                            href="{{ route('berita_detail', $data->slug) }}/{{ $data->slug }}">Baca
+                                            href="{{ route('berita_detail', $data->slug) }}">Baca
                                             Selanjutnya <i class="fas fa-angle-double-right"></i></a>
                                         <div class="meta">
                                             <ul>
