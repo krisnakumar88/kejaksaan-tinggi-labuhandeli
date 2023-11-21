@@ -35,7 +35,7 @@
                                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                                     <h5 class="modal-title mb-4 text-center">Tambah Berita</h5>
                                     <div class="">
-                                        <form action="{{ route('halaman.store') }}" method="post"
+                                        <form action="{{ route('berita.store') }}" method="post"
                                             enctype='multipart/form-data'>
                                             @csrf
                                             <hr>
