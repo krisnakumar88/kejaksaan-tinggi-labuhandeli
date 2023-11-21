@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\Pejabatstruktural;
+use App\Models\Daftarpencarian;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     public function index(){
-        $send['getPejabat'] = Pejabatstruktural::all();
+        $send['getPejabat']         = Pejabatstruktural::all();
+        $send['getDaftarpencarian'] = Daftarpencarian::all();
         return view("front.index", $send);
     }
 
