@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pejabatstruktural;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class PejabatstrukturalController extends Controller
@@ -36,9 +37,9 @@ class PejabatstrukturalController extends Controller
      */
     public function store(Request $request)
     {
-        $dataFile = $request->validate([
-            'foto' => 'required|file|mimes:jpg,jpeg,bmp,png'
-        ]);
+        // $dataFile = $request->validate([
+        //     'foto' => 'required|file|mimes:jpg,jpeg,bmp,png'
+        // ]);
 
         if ($request->hasFile('foto')) {
             $filenameWithExt = $request->file('foto')->getClientOriginalName();
@@ -57,12 +58,13 @@ class PejabatstrukturalController extends Controller
             'tentang' => 'required|min:3'
         ]);
 
-        $file = File::FirstOrCreate([
-            'name' => $filenameSimpan,
-            'type' => $type,
-            'size' => $size
-        ]);
+        // $file = File::FirstOrCreate([
+        //     'name' => $filenameSimpan,
+        //     'type' => $type,
+        //     'size' => $size
+        // ]);
 
+        // $validatedData['foto'] = $file->id;
         $validatedData['foto'] = "";
         // $validatedData['user_id'] = Auth::user()->id;
 
@@ -116,8 +118,7 @@ class PejabatstrukturalController extends Controller
     public function destroy(Pejabatstruktural $pejabatstruktural)
     {
         $pejabatstruktural = Pejabatstruktural::where('id', $pejabatstruktural)->first();
-
-        Berita::destroy($pejabatstruktural);
+        Pejabatstruktural::destroy($pejabatstruktural);
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

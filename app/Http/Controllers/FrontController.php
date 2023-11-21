@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Pejabatstruktural;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     public function index(){
-        return view("front.index");
+        $send['getPejabat'] = Pejabatstruktural::all();
+        return view("front.index", $send);
     }
 
     public function berita(){

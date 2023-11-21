@@ -420,19 +420,20 @@
                 <div class="col-md-12">
                     <div class="advisor-carousel owl-carousel owl-theme text-center text-light">
                         <!-- Single Item -->
+                        @foreach($getPejabat as $itemsPejabat)
                         <div class="advisor-item">
                             <div class="info-box">
                                 <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/ANWAR.jpg"
                                     alt="Thumb">
                                 <div class="info-title">
-                                    <h4>Datuk Rosihan Anwar, S.H.,M.H.</h4>
-                                    <span>ASISTEN PERDATA DAN TATA USAHA NEGARA KEJATI SUMUT</span>
+                                    <h4>{{ $itemsPejabat->nama }}</h4>
+                                    <span>{{ $itemsPejabat->title }}</span>
                                 </div>
                                 <div class="overlay">
                                     <div class="box">
                                         <div class="content">
                                             <div class="overlay-content">
-                                                <h4>Tentang<br>Datuk Rosihan Anwar, S.H.,M.H.</h4>
+                                                <h4>Tentang<br>{{ $itemsPejabat->tentang }}</h4>
                                                 <p>
                                                     -
                                                 </p>
@@ -443,198 +444,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/M_SYARIFUDDIN.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Muhammad Syarifuddin, S.H.,M.H.</h4>
-                                    <span>Wakil kepala KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Muhammad Syarifuddin, S.H.,M.H.</h4>
-                                                <p>
-                                                    Wakil kepala KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202303/asbinfix.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Sukarman Sumarinton, S.H., M.H.</h4>
-                                    <span>Asisten Pembinaan KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Sukarman Sumarinton, S.H., M.H.</h4>
-                                                <p>
-                                                    Asisten Pembinaan KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202204/ass6.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>I Made Sudarmawan, S.H., M.H.</h4>
-                                    <span>Asisten Intelijen KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>I Made Sudarmawan, S.H., M.H.</h4>
-                                                <p>
-                                                    Asisten Intelijen KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202303/aspidumfix.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Luhur Istighfar, S.H., M.Hum.</h4>
-                                    <span>Asisten Pidana Umum KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Luhur Istighfar, S.H., M.Hum.</h4>
-                                                <p>
-                                                    Asisten Pidana Umum KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/IWAN_GINTING.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Dr. Iwan Ginting, S.H.,M.H</h4>
-                                    <span>Asisten Pidana Khusus KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Dr. Iwan Ginting, S.H.,M.H</h4>
-                                                <p>
-                                                    Asisten Pidana Khusus KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202303/aspidmilfix.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Kolonel Makmur Surbakti, S.H., M.H.</h4>
-                                    <span>Asisten Pidana Militer Kejati Sumut</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Kolonel Makmur Surbakti, S.H., M.H.</h4>
-                                                <p>
-                                                    Asisten Pidana Militer Kejati Sumut
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202303/aswasfix.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Darmukit, S.H., M.H.</h4>
-                                    <span>Asisten Pengawasan KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Darmukit, S.H., M.H.</h4>
-                                                <p>
-                                                    Asisten Pengawasan KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Single Item -->
-                        <div class="advisor-item">
-                            <div class="info-box">
-                                <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202204/ass2.jpg"
-                                    alt="Thumb">
-                                <div class="info-title">
-                                    <h4>Rahmad Isnaini, S.H., M.H.</h4>
-                                    <span>KABAG. TU KEJATI SUMUT</span>
-                                </div>
-                                <div class="overlay">
-                                    <div class="box">
-                                        <div class="content">
-                                            <div class="overlay-content">
-                                                <h4>Tentang<br>Rahmad Isnaini, S.H., M.H.</h4>
-                                                <p>
-                                                    KABAG. TU KEJATI SUMUT
-                                                </p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
 
                     </div>
                 </div>

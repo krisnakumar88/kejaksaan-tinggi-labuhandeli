@@ -1,6 +1,6 @@
 @extends('template.AdminTemplate')
 
-@section('judul', 'Data Pejabat Struktural')
+@section('judul', 'Data Daftar Pencarian Orang (DPO)')
 
 @section('konten')
 
@@ -9,7 +9,7 @@
         <div class="card shadow mb-4">
 
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Pejabat Struktural</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Pencarian Orang (DPO)</h6>
 
             </div>
 
@@ -28,36 +28,16 @@
                 <hr>
 
                 <div class="modal fade" id="modal-tambah">
-                    <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-body pd-20 pd-sm-40">
                                 <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
                                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                                <h5 class="modal-title mb-4 text-center">Tambah Pejabat Struktural</h5>
+                                <h5 class="modal-title mb-4 text-center">Tambah Daftar Pencarian Orang</h5>
                                 <div class="">
-                                    <form action="{{ route('pejabatstruktural.store') }}" method="post">
+                                    <form action="{{ route('daftarpencarian.store') }}" method="post"
+                                        enctype='multipart/form-data'>
                                         @csrf
-                                        <hr>
-                                        <div class="form-group">
-                                            <label class="">Nama Pejabat Struktural</label>
-                                            <input class="form-control @error('nama') is-invalid @enderror" required
-                                                type="text" name="nama" value="{{ old('nama') }}">
-                                            @error('nama')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Title</label>
-                                            <input class="form-control @error('title') is-invalid @enderror" required
-                                                type="text" name="title" value="{{ old('title') }}">
-                                            @error('title')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
                                         <hr>
                                         <div class="form-group">
                                             <label class="">Foto</label>
@@ -67,15 +47,47 @@
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="">Nama</label>
+                                            <input class="form-control @error('nama') is-invalid @enderror" required
+                                                type="text" name="nama" value="{{ old('nama') }}">
+                                            @error('nama')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Kasus</label>
+                                            <input class="form-control @error('kasus') is-invalid @enderror" required
+                                                type="text" name="kasus" value="{{ old('kasus') }}">
+                                            @error('kasus')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Keterangan</label>
+                                            <textarea class="form-control @error('keterangan') is-invalid @enderror"
+                                                type="text" name="keterangan" value="{{ old('keterangan') }}"
+                                                required></textarea>
+                                            @error('keterangan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+
                                         <hr>
                                         <div class="form-group">
-                                            <label class="">Tentang</label>
-                                            <textarea name="tentang" id="tentang" rows="10" cols="80"></textarea>
                                             <br>
                                             <button class="btn btn-primary" type="submit" id="submit">Submit</button>
                                         </div>
                                     </form>
                                 </div>
+
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -87,8 +99,8 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Pejabat</th>
-                                <th>Title</th>
+                                <th>Nama</th>
+                                <th>Kasus</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -98,7 +110,7 @@
 
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="">{{ $item->nama }}</td>
-                                <td class="">{{ $item->title }}</td>
+                                <td class="">{{ $item->kasus }}</td>
 
                                 <td class="text-center">
                                     <div class="btn btn-list">
@@ -109,8 +121,8 @@
                                             <button class="dropdown-item" data-target="#modal-iframe-{{ $item->slug }}"
                                                 data-toggle="modal">Live Preview</button>
                                             {{-- <a href="" class="dropdown-item">Detail</a> --}}
-                                            <form action="{{ route('pejabatstruktural.destroy', $item->id) }}" method="post"
-                                                class="form-delete">
+                                            <form action="{{ route('daftarpencarian.destroy', $item->id) }}"
+                                                method="post" class="form-delete">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit" class="dropdown-item" data-toggle="tooltip"
@@ -129,17 +141,30 @@
                         </tbody>
                     </table>
 
-
-
+                    {{--@foreach ($data as $item)
+                    <div class="modal fade" id="modal-iframe-{{ $item->slug }}">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body pd-20 pd-sm-40">
+                                <iframe src="{{ route('daftarpencarian_detail', $item->slug) }}" height="1000"
+                                    width="1000" title="KONTEN"></iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @endforeach--}}
+
+
 
             </div>
+
         </div>
     </div>
 </div>
+</div>
 
 <script>
-CKEDITOR.replace('tentang');
+CKEDITOR.replace('konten');
 </script>
 <script>
 document.querySelector('.custom-file-input').addEventListener('change', function(e) {
