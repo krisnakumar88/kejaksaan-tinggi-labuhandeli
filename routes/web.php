@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\HalamanController;
 use App\Http\Controllers\LoginController;
+
 use App\Models\Halaman;
+
+use App\Http\Controllers\PejabatstrukturalController;
+use App\Http\Controllers\DaftarpencarianController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +41,20 @@ Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admi
 
 Route::resource('/admin/berita', BeritaController::class);
 
+
 Route::resource('/admin/halaman', HalamanController::class);
+
+/*
+============================ Routes Pejabat Struktural ============================
+*/
+Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
+/*
+============================ endroutes Pejabat Struktural ============================
+*/
+/*
+============================ Routes DPO ============================
+*/
+Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
+/*
+============================ endroutes DPO ============================
+*/

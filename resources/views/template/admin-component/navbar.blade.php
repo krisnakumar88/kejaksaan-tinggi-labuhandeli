@@ -66,6 +66,24 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pejabatstruktural.index') }}" aria-expanded="true" aria-controls="dataSitus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Pejabat Struktural</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('daftarpencarian.index') }}" aria-expanded="true" aria-controls="dataSitus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data DPO</span>
+        </a>
+    </li>
+    {{-- <li class="nav-item">
+        <a class="nav-link" href="{{ route('situsterkait.index') }}" aria-expanded="true" aria-controls="dataSitus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Situs Terkait</span>
+        </a>
+    </li>--}}
 
     <!-- Nav Item - Utilities Collapse Menu -->
     {{-- <li class="nav-item">
