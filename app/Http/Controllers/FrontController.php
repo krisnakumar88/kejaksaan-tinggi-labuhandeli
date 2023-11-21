@@ -25,4 +25,9 @@ class FrontController extends Controller
 
         return view('front.berita_detail', compact('berita'));
     }
+
+    public function dpo(){
+        $send['getDpo'] = Daftarpencarian::all();
+        return view('front.dpo', $send);
+    }
 }
