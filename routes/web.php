@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\HalamanController;
 use App\Http\Controllers\LoginController;
-
 use App\Models\Halaman;
-
 use App\Http\Controllers\PejabatstrukturalController;
 use App\Http\Controllers\DaftarpencarianController;
 
@@ -55,6 +53,6 @@ Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
 ============================ Routes DPO ============================
 */
 Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
+Route::get('/dpo', [FrontController::class,'dpo'])->name('dpo');
 /*
 ============================ endroutes DPO ============================
-*/

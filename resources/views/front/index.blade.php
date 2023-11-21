@@ -427,7 +427,7 @@
                                 alt="Thumb">
                             <div class="info-title">
                                 <h4>{{ $itemsPejabat->nama }}</h4>
-                                <span>{{ $itemsPejabat->title }}</span>
+                                <span>{{ $itemsPejabat->jabatan }}</span>
                             </div>
                             <div class="overlay">
                                 <div class="box">
