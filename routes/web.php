@@ -54,5 +54,3 @@ Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
 */
 Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
 Route::get('/dpo', [FrontController::class,'dpo'])->name('dpo');
-/*
-============================ endroutes DPO ============================
