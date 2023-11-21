@@ -14,17 +14,17 @@
             </div>
 
             <div class="card-body">
-                @if (session()->has('failed'))
-                {{ session('failed') }}
+                @if (session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
                 @endif
-
 
                 <button class="btn btn-primary btn-icon-split" data-target="#modal-tambah" data-toggle="modal"><span
                         class="icon text-white-50">
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">Tambah Data</span></button>
-
                 <hr>
 
                 <div class="modal fade" id="modal-tambah">
@@ -122,11 +122,11 @@
                                                 data-toggle="modal">Live Preview</button>
                                             {{-- <a href="" class="dropdown-item">Detail</a> --}}
                                             <form action="{{ route('daftarpencarian.destroy', $item->id) }}"
-                                                method="post" class="form-delete">
+                                                method="post">
+                                                @method('delete')
                                                 @csrf
-                                                <input type="hidden" name="_method" value="DELETE">
-                                                <button type="submit" class="dropdown-item" data-toggle="tooltip"
-                                                    id="delete-button">Delete</button>
+                                                <button class="dropdown-item" data-toggle="tooltip" id="delete-button"
+                                                    onclick="return confirm('Yakin hapus data?')">Delete</button>
                                             </form>
                                             <button class="dropdown-item" data-target="#modal-update-{{ $item->id }}"
                                                 data-toggle="modal">Edit</button>

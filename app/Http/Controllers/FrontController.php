@@ -12,6 +12,7 @@ class FrontController extends Controller
     public function index(){
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
+        
         return view("front.index", $send);
     }
 

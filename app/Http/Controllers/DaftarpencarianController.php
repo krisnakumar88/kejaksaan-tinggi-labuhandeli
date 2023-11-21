@@ -53,17 +53,18 @@ class DaftarpencarianController extends Controller
             'kasus'      => 'required|min:3|max:255',
             'keterangan' => 'required|min:3'
         ]);
+        
         $file = File::FirstOrCreate([
             'name' => $filenameSimpan,
             'type' => $type,
             'size' => $size
         ]);
-        $validatedData['foto'] = $file->id;
 
-        $daftarpencarian = Daftarpencarian::create($validatedData);
+        $validatedData['foto'] = $file->id;
 
         $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
+        $daftarpencarian = Daftarpencarian::create($validatedData);
         return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
@@ -109,6 +110,7 @@ class DaftarpencarianController extends Controller
      */
     public function destroy(Daftarpencarian $daftarpencarian)
     {
-        //
+        Daftarpencarian::destroy($daftarpencarian->id);
+        return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Dihapus');
     }
 }
