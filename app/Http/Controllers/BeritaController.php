@@ -55,40 +55,12 @@ class BeritaController extends Controller
             return redirect()->back()->with('failed', 'Gambar Belum Masuk');
         }
 
-        // $type = $request->foto->getClientMimeType();
-        // $size = $request->foto->getSize();
-
-        // $fileName = time() . '-' . $request->foto->getClientOriginalName();
-
         $validatedData = $this->validate($request, [
             'judul' => 'required|min:3|max:255',
             'content' => 'required|min:3'
         ]);
 
         $validatedData['slug'] = Str::slug($validatedData['judul'], '-');
-
-        // Berita::create($validatedData);
-
-        // $dataBerita = [
-        //     'judul' => $request->input('judul'),
-        //     'content' => $request->input('konten'),
-        //     'slug' => Str::slug($request->input('judul')),
-        //     'user_id' => Auth::user()->id,
-        // ];
-
-
-
-        // $dataUser['password'] = Hash::make($dataUser['password']);
-
-        // $dataUser['role'] = "anggota";
-
-        // DB::beginTransaction();
-
-        // try {
-
-        // $user = User::FirstOrCreate($dataUser);
-
-        // $dataBerita['id_user'] = $user->id;
 
         $file = File::FirstOrCreate([
             'name' => $filenameSimpan,
@@ -143,9 +115,51 @@ class BeritaController extends Controller
      * @param  \App\Models\Berita  $berita
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Berita $berita)
+    public function update(Request $request, $berita)
     {
-        //
+        $berita = $berita = Berita::where('id', $berita)->first();
+
+        $this->validate($request, [
+            'foto' => 'file|mimes:jpg,jpeg,bmp,png',
+            'judul' => 'required|min:3|max:255',
+            'content' => 'required|min:3'
+        ]);
+
+        if ($request->hasFile('foto')) {
+
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $type = $request->file('foto')->getClientMimeType();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenameSimpan = time() . '.' . $extension;
+            $size = $request->file('foto')->getSize();
+
+            $foto = File::where('id', $berita->foto)->first();
+
+            unlink(public_path('file/' . $foto->name));
+
+            $request->file('foto')->move(public_path('file'), $filenameSimpan);
+
+            $file = File::FirstOrCreate([
+                'name' => $filenameSimpan,
+                'type' => $type,
+                'size' => $size
+            ]);
+
+            $berita->update([
+                'foto' => $file->id,
+                'judul' => $request->judul,
+                'content' => $request->content
+            ]);
+
+        }else {
+            $berita->update([
+                'judul' => $request->judul,
+                'content' => $request->content
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -157,6 +171,12 @@ class BeritaController extends Controller
     public function destroy($berita)
     {
         $berita = Berita::where('id', $berita)->first();
+
+        // Untuk menghapus Foto yang terhubung sama berita
+        $foto = File::where('id', $berita->foto)->first();
+        File::where('id', $berita->foto)->delete();
+        unlink(public_path('file/' . $foto->name));
+        // akhir
 
         Berita::destroy($berita);
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
