@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Daftarpencarian;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class DaftarpencarianController extends Controller
@@ -36,14 +37,32 @@ class DaftarpencarianController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->hasFile('foto')) {
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $type = $request->file('foto')->getClientMimeType();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenameSimpan = time() . '.' . $extension;
+            $size = $request->file('foto')->getSize();
+        } else {
+            return redirect()->back()->with('failed', 'Gambar Belum Masuk');
+        }
+
         $validatedData = $this->validate($request, [
             'nama'       => 'required|min:3|max:255',
             'kasus'      => 'required|min:3|max:255',
             'keterangan' => 'required|min:3'
         ]);
-        $validatedData['foto'] = "";
-        
+        $file = File::FirstOrCreate([
+            'name' => $filenameSimpan,
+            'type' => $type,
+            'size' => $size
+        ]);
+        $validatedData['foto'] = $file->id;
+
         $daftarpencarian = Daftarpencarian::create($validatedData);
+
+        $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
         return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Ditambahkan');
     }
