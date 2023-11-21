@@ -215,7 +215,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-3 equal-height">
+                    {{-- <div class="col-md-3 col-sm-3 equal-height">
                         <div class="item malachite"
                             style="background-image: url(http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202307/OIP.jpg);">
                             <a href="http://atcsdishub.pemkomedan.go.id/#streaming">
@@ -226,7 +226,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                 </div>

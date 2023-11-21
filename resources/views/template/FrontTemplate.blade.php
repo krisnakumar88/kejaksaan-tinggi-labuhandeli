@@ -50,21 +50,21 @@
                         <ul>
                             <li>
                                 <i class="fas fa-map-marker"></i>
-                                Jl. A.H. Nasution No. 1C Medan
+                                Jl. Titi Pahlawan No.1 Martubung
                             </li>
                             <li>
                                 <i class="fas fa-envelope-open"></i>
-                                Kt.sumut@kejaksaan.go.id
+                                labuhandeli.cabjari@gmail.com
                             </li>
                             <li>
                                 <i class="fas fa-phone"></i>
-                                061-42786408
+                                061-6851213
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="user-login text-right col-md-4">
-                    <a target="_blank" href="https://goo.gl/maps/43DrqznTE6yZ4M4J8">
+                    <a target="_blank" href="https://maps.app.goo.gl/mt9j4dRSoiDjgoRXA">
                         <i class="fas fa-map"></i> Lihat di Maps
                     </a>
                 </div>
@@ -284,12 +284,14 @@
                     <div class="col-md-3 item">
                         <div class="f-item">
                             <h4>Kontak Kami</h4>
-                            <p><i class="fas fa-phone" style="margin-right: 10px"></i> 061-42786408</p>
-                            <p><i class="fas fa-home" style="margin-right: 10px"></i> Jl. A.H. Nasution No. 1C Medan
+                            <p><i class="fas fa-phone" style="margin-right: 10px"></i> 061-6851213</p>
+                            <p><i class="fas fa-home" style="margin-right: 10px"></i> Jl. Titi Pahlawan No. 1
+                                Martubung
                             </p>
-                            <p><i class="fas fa-envelope" style="margin-right: 10px"></i> Kt.sumut@kejaksaan.go.id</p>
+                            <p><i class="fas fa-envelope" style="margin-right: 10px"></i>labuhandeli.cabjari@gmail.com
+                            </p>
                             <p><i class="fas fa-globe" style="margin-right: 10px"></i>
-                                https://kejati-sumaterautara.kejaksaan.go.id</p>
+                                {{ route('halaman_utama') }}</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 item">
@@ -387,13 +389,13 @@
                             <h4>Sosial Media</h4>
                             <ul>
                                 <li>
-                                    <a href="https://www.instagram.com/kejatisumut/"><i class="fab fa-instagram"></i>
+                                    <a href="https://www.instagram.com/cabjari_labdel/" target="_blank"><i class="fab fa-instagram"></i>
                                     </a>
-                                    <a href="https://www.facebook.com/humaskejatisumut"><i
+                                    <a href="https://www.facebook.com/cabjari.labuhandeli.7" target="_blank"><i
                                             class="fab fa-facebook"></i> </a>
-                                    <a href="https://www.youtube.com/watch?v=lJvyWNkfkKs"><i
+                                    <a href="https://www.youtube.com/@cknlabuhandeli8330" target="_blank"><i
                                             class="fab fa-youtube"></i> </a>
-                                    <a href="https://www.twitter.com/humaskejatisu"><i class="fab fa-twitter"></i>
+                                    <a href="https://twitter.com/Cabjari_Labdel" target="_blank"><i class="fab fa-twitter"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -407,11 +409,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <p>&copy; Hak Cipta 2023. Semua hak dilindungi oleh <a
-                                    href="{{ route('halaman_utama') }}">KEJATI MEDAN</a></p>
+                                    href="{{ route('halaman_utama') }}">CABANG KEJAKSAAN NEGERI DELI SERDANG DI LABUHAN DELI</a></p>
                         </div>
-                        <div class="col-md-6 text-right link">
+                        <div class="col-md-4 text-right link">
                             <ul>
 
                             </ul>
@@ -449,23 +451,11 @@
     <div id="contact" class="arcontactus-widget arcontactus-message right lg active">
 
         <div class="messangers-block lg">
-            <a class="messanger " href="https://api.whatsapp.com/send?phone=6281277900190" target="_blank">
+            <a class="messanger " href="https://api.whatsapp.com/send?phone=6285361494646" target="_blank">
                 <span style="background-color:#4EB625">
                     <i class="fab fa-whatsapp"></i>
                 </span>
-                <p>Hotline Pelayanan Hukum Pengaduan Masyarakat dan Pengaduan Mafia Tanah</p>
-            </a>
-            <a class="messanger " href="https://api.whatsapp.com/send?phone=6282163919367" target="_blank">
-                <span style="background-color:#4EB625">
-                    <i class="fab fa-whatsapp"></i>
-                </span>
-                <p>Hotline Sipandu Desa</p>
-            </a>
-            <a class="messanger " href="https://api.whatsapp.com/send?phone=6282146210553" target="_blank">
-                <span style="background-color:#4EB625">
-                    <i class="fab fa-whatsapp"></i>
-                </span>
-                <p>Hotline Unit Pengendalian Gratifikasi</p>
+                <p>Hotline Pelayanan Hukum Pengaduan Masyarakat, Keluhan Tentang Pelayanan, Dugaan Korupsi, Pungli dan gratifikasi, Dan Kritik Dan Saran</p>
             </a>
         </div>
 
@@ -515,8 +505,8 @@
     <script src="{!! asset('front/js/jquery.magnific-popup.min.js') !!}"></script>
     <script>
         /* ==================================================
-                # Advisor Carousel
-                ===============================================*/
+                    # Advisor Carousel
+                    ===============================================*/
         $('.advisor-carousel').owlCarousel({
             loop: false,
             margin: 30,
