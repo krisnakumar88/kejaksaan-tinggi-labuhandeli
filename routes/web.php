@@ -4,7 +4,9 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\HalamanController;
 use App\Http\Controllers\LoginController;
+use App\Models\Halaman;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,7 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 
 Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admin-dashboard')->middleware('auth');
+
 Route::resource('/admin/berita', BeritaController::class);
+
+Route::resource('/admin/halaman', HalamanController::class);
