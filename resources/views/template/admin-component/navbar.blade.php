@@ -67,17 +67,10 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#dataPejabat"
-            aria-expanded="true" aria-controls="dataPejabat">
+        <a class="nav-link" href="{{ route('pejabatstruktural.index') }}" aria-expanded="true" aria-controls="dataSitus">
             <i class="fas fa-fw fa-cog"></i>
             <span>Data Pejabat Struktural</span>
         </a>
-        <div id="dataPejabat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('pejabatstruktural.index') }}">Pejabat Struktural</a>
-                <a class="collapse-item" href="/">Kategori Berita</a>
-            </div>
-        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('daftarpencarian.index') }}" aria-expanded="true" aria-controls="dataSitus">

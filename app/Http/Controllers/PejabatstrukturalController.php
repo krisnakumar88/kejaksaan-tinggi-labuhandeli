@@ -37,10 +37,6 @@ class PejabatstrukturalController extends Controller
      */
     public function store(Request $request)
     {
-        // $dataFile = $request->validate([
-        //     'foto' => 'required|file|mimes:jpg,jpeg,bmp,png'
-        // ]);
-
         if ($request->hasFile('foto')) {
             $filenameWithExt = $request->file('foto')->getClientOriginalName();
             $type = $request->file('foto')->getClientMimeType();
@@ -53,35 +49,32 @@ class PejabatstrukturalController extends Controller
         }
 
         $validatedData = $this->validate($request, [
-            'nama' => 'required|min:3|max:255',
-            'title' => 'required|min:3|max:255',
-            'tentang' => 'required|min:3'
+            'nama'              => 'required|min:3|max:255',
+            'jabatan'           => 'required|min:3|max:255',
+            'tentang_pejabat'   => 'required|min:3'
+        ]);
+        
+        $file = File::FirstOrCreate([
+            'name' => $filenameSimpan,
+            'type' => $type,
+            'size' => $size
         ]);
 
-        // $file = File::FirstOrCreate([
-        //     'name' => $filenameSimpan,
-        //     'type' => $type,
-        //     'size' => $size
-        // ]);
+        $validatedData['foto'] = $file->id;
 
-        // $validatedData['foto'] = $file->id;
-        $validatedData['foto'] = "";
-        // $validatedData['user_id'] = Auth::user()->id;
+        $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
-        $pejabatstruktural = Pejabatstruktural::create($validatedData);
-
-        // $request->file('foto')->move(public_path('file'), $filenameSimpan);
-
+        Pejabatstruktural::create($validatedData);
         return redirect()->route('pejabatstruktural.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Pejabatstruktural $pejabatstruktural)
+    public function show($id)
     {
         //
     }
@@ -89,10 +82,10 @@ class PejabatstrukturalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pejabatstruktural $pejabatstruktural)
+    public function edit($id)
     {
         //
     }
@@ -101,10 +94,10 @@ class PejabatstrukturalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pejabatstruktural $pejabatstruktural)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -112,13 +105,11 @@ class PejabatstrukturalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pejabatstruktural $pejabatstruktural)
+    public function destroy($id)
     {
-        $pejabatstruktural = Pejabatstruktural::where('id', $pejabatstruktural)->first();
-        Pejabatstruktural::destroy($pejabatstruktural);
-        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
+        //
     }
 }

@@ -11,11 +11,7 @@ class Pejabatstruktural extends Model
     protected $table = 'pejabat';
     protected $guarded = ['id'];
 
-    public function file(){
+    public function getFile(){
         return $this->hasOne(File::class, 'id', 'foto');
     }
-
-    // public function user(){
-    //     return $this->hasOne(User::class, 'id', 'user_id');
-    // }
 }

@@ -423,7 +423,7 @@
                     @foreach($getPejabat as $itemsPejabat)
                     <div class="advisor-item">
                         <div class="info-box">
-                            <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/ANWAR.jpg"
+                            <img src="{{ asset('file') }}/{{ $itemsPejabat->getFile->name }}"
                                 alt="Thumb">
                             <div class="info-title">
                                 <h4>{{ $itemsPejabat->nama }}</h4>
@@ -646,7 +646,7 @@
                     @foreach($getDaftarpencarian as $itemsDaftar)
                     <div class="advisor-item">
                         <div class="info-box">
-                            <img src="{{ asset("file") }}/{{ $itemsDaftar->getFile->name }}"
+                            <img src="{{ asset('file') }}/{{ $itemsDaftar->getFile->name }}"
                                 alt="Thumb">
                             <div class="info-title">
                                 <h4>{{ $itemsDaftar->nama }}</h4>

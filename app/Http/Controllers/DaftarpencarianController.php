@@ -64,7 +64,7 @@ class DaftarpencarianController extends Controller
 
         $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
-        $daftarpencarian = Daftarpencarian::create($validatedData);
+        Daftarpencarian::create($validatedData);
         return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 

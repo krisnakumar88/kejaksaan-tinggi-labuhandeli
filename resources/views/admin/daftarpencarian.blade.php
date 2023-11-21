@@ -19,6 +19,11 @@
                     {{ session('success') }}
                 </div>
                 @endif
+                @if (session()->has('error'))
+                <div class="alert alert-error" role="alert">
+                    {{ session('error') }}
+                </div>
+                @endif
 
                 <button class="btn btn-primary btn-icon-split" data-target="#modal-tambah" data-toggle="modal"><span
                         class="icon text-white-50">
@@ -128,10 +133,8 @@
                                                 <button class="dropdown-item" data-toggle="tooltip" id="delete-button"
                                                     onclick="return confirm('Yakin hapus data?')">Delete</button>
                                             </form>
-                                            <button class="dropdown-item" data-target="#modal-update-{{ $item->id }}"
+                                            <button class="dropdown-item" data-target="#modal-tambah-{{ $item->slug }}"
                                                 data-toggle="modal">Edit</button>
-
-
                                         </div>
 
                                     </div>
@@ -153,6 +156,7 @@
                     </div>
                 </div>
                 @endforeach--}}
+
 
 
 

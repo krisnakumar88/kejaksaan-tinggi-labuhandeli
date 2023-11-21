@@ -16,9 +16,9 @@ class CreatePejabatTable extends Migration
         Schema::create('pejabat', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('foto');
-            $table->string('title');
+            $table->string('jabatan');
             $table->string('nama');
-            $table->longText('tentang');
+            $table->longText('tentang_pejabat');
             $table->timestamps();
         });
     }
