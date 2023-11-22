@@ -48,8 +48,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/">Menu</a>
-                <a class="collapse-item" href="/">Sub Menu</a>
+                <a class="collapse-item" href="{{ route('halaman.index') }}">Kategori Halaman</a>
+                <a class="collapse-item" href="{{ route('subhalaman.index') }}">Sub Menu</a>
             </div>
         </div>
     </li>
@@ -62,7 +62,6 @@
         <div id="dataBerita" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('berita.index') }}">Berita</a>
-                <a class="collapse-item" href="/">Kategori Berita</a>
             </div>
         </div>
     </li>

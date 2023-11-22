@@ -96,30 +96,13 @@
         <nav class="navbar navbar-default attr-border navbar-sticky bootsnav">
 
             <!-- Start Top Search -->
-            <div class="container">
-                <div class="row">
-                    <div class="top-search">
-                        <div class="input-group">
-                            <form action="" method="GET">
-                                @csrf
-                                <input type="text" name="keyword" class="form-control"
-                                    placeholder="Cari berdasarkan judul...">
-                                <button type="submit"><i class="fas fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- End Top Search -->
 
             <div class="container">
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                    </ul>
-                </div>
+
                 <!-- End Atribute Navigation -->
 
                 <!-- Start Header Navigation -->
@@ -127,9 +110,8 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="https://kejati-sumaterautara.kejaksaan.go.id">
-                        <img src="http://kejati-sumaterautara.kejaksaan.go.id/web/assets/img/kejati/logo-mini.png"
-                            height="20" class="logo" alt="Logo">
+                    <a class="navbar-brand" href="{{ Route('halaman_utama') }}">
+                        <img src="{!! asset('front/img/logo-mini.png') !!}" height="20" class="logo" alt="Logo">
                     </a>
                 </div>
                 <!-- End Header Navigation -->
@@ -137,127 +119,34 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav navbar-left" data-in="#" data-out="#">
+                        {{-- {{ App\Models\ }} --}}
+
+                        <?php
+
+                        $category = App\Models\Halaman::all();
+
+                        // dd($category);
+
+                        foreach ($category as $value) {
+                            $subhalaman = App\Models\Subhalaman::where('id_halaman', $value->id)->get();
+                        ?>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Profil</a>
+                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">{{ $value->nama }}</a>
                             <ul class="dropdown-menu">
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/tentang-kami">Tentang
-                                        Kami</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/doktrin-adhyaksa">Doktrin
-                                        Adhyaksa</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/perintah-harian">Perintah
-                                        Harian</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/visi--misi">Visi &
-                                        Misi</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/sambutan-ketua">Sambutan
-                                        Kepala Kejaksaan Tinggi Sumut</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/kepala-kejaksaan-tinggi-sumut-dari-masa-ke-masa-">Kepala
-                                        Kejaksaan Tinggi Sumut Dari Masa ke Masa</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/struktur-organisasi-kejaksaan-tinggi-sumatera-utara">Struktur
-                                        Organisasi Kejaksaan Tinggi Sumatera Utara</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/prestasi">Prestasi</a>
-                                </li>
+                                @foreach ($subhalaman as $data)
+                                <li><a href="{{ route('subhalaman', $data->slug) }}">{{ $data->judul }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Sarana</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/gedung-kantor">Gedung
-                                        Kantor</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/pelayanan-terpadu-satu-pintu-ptsp">Pelayanan
-                                        Terpadu Satu Pintu (PTSP)</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/aula-sasana-cipta-karya">Aula
-                                        Sasana Cipta Karya</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/sentra-diklat">Sentra
-                                        Diklat</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/klinik-pratama-rawat-jalan-adhyaksa">Klinik
-                                        Pratama Rawat Jalan Adhyaksa</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/fasilitas-umum">Fasilitas
-                                        Umum</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/siaran-pers">Siaran Pers</a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Informasi
-                                Publik</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/maklumat-pelayanan">Maklumat
-                                        Pelayanan</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/pelayan-informasi-publik">Pejabat
-                                        PPID</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/struktur-ppid">Struktur
-                                        PPID</a></li>
-                                <li><a href="#">Alur Pelayanan Publik</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/sop">SOP</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/undang-undang">Undang -
-                                        Undang</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Pelayanan
-                                Masyarakat</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/pengaduan">Pengaduan
-                                        Masyarakat</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/info-pemilu-2024">Info
-                                        Pemilu 2024</a></li>
-                                <li><a href="https://cms-publik.kejaksaan.go.id/">Perkara Tindak Pidana Umum</a></li>
-                                <li><a href="https://cms-publik.kejaksaan.go.id/">Perkara Tindak Pidana Khusus</a></li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/berita">Berita</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/pengumuman">Pengumuman</a>
-                                </li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/agenda">Agenda</a>
-                                </li>
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/dpo">Daftar Pencarian Orang
-                                        (DPO)</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Reformasi
-                                Birokrasi</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/manajemen-perubahan">Manajemen
-                                        Perubahan</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/penguatan-ketatalaksanaan-">Penguatan
-                                        Ketatalaksanaan</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/penataan-sistem-manajemen-sdm">Penataan
-                                        Sistem Manajemen SDM</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/penguatan-akuntabilitas">Penguatan
-                                        Akuntabilitas</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/penguatan-pengawasan">Penguatan
-                                        Pengawasan</a></li>
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/peningkatan-kualitas-pelayanan-publik">Peningkatan
-                                        Kualitas Pelayanan Publik</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Survei</a>
-                            <ul class="dropdown-menu">
-                                <li><a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/kepuasan-pelayanan-publik">Kepuasan
-                                        Pelayanan Publik</a></li>
-                                <li><a
-                                        href="https://reformasibirokrasi.kejaksaan.go.id/survei/survei_new.php?layanan=HotlinePengaduan&id=006287&key=UI3L6VpdNGNval4rB3TE">Survei
-                                        Hotline Pengaduan</a></li>
-                                <li><a
-                                        href="https://reformasibirokrasi.kejaksaan.go.id/survei/survei_new.php?layanan=SurveyKepuasanLayana&id=006287&key=UI3L6VpdNGNval4rB3TE">Survei
-                                        Layanan PTSP</a></li>
-                            </ul>
-                        </li>
+
+
+
+                        <?php
+
+                        }
+
+                        ?>
                         <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/hubungi">Hubungi</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -389,13 +278,15 @@
                             <h4>Sosial Media</h4>
                             <ul>
                                 <li>
-                                    <a href="https://www.instagram.com/cabjari_labdel/" target="_blank"><i class="fab fa-instagram"></i>
+                                    <a href="https://www.instagram.com/cabjari_labdel/" target="_blank"><i
+                                            class="fab fa-instagram"></i>
                                     </a>
                                     <a href="https://www.facebook.com/cabjari.labuhandeli.7" target="_blank"><i
                                             class="fab fa-facebook"></i> </a>
                                     <a href="https://www.youtube.com/@cknlabuhandeli8330" target="_blank"><i
                                             class="fab fa-youtube"></i> </a>
-                                    <a href="https://twitter.com/Cabjari_Labdel" target="_blank"><i class="fab fa-twitter"></i>
+                                    <a href="https://twitter.com/Cabjari_Labdel" target="_blank"><i
+                                            class="fab fa-twitter"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -411,7 +302,8 @@
                     <div class="col-md-12">
                         <div class="col-md-8">
                             <p>&copy; Hak Cipta 2023. Semua hak dilindungi oleh <a
-                                    href="{{ route('halaman_utama') }}">CABANG KEJAKSAAN NEGERI DELI SERDANG DI LABUHAN DELI</a></p>
+                                    href="{{ route('halaman_utama') }}">CABANG KEJAKSAAN NEGERI DELI SERDANG DI LABUHAN
+                                    DELI</a></p>
                         </div>
                         <div class="col-md-4 text-right link">
                             <ul>
@@ -455,7 +347,8 @@
                 <span style="background-color:#4EB625">
                     <i class="fab fa-whatsapp"></i>
                 </span>
-                <p>Hotline Pelayanan Hukum Pengaduan Masyarakat, Keluhan Tentang Pelayanan, Dugaan Korupsi, Pungli dan gratifikasi, Dan Kritik Dan Saran</p>
+                <p>Hotline Pelayanan Hukum Pengaduan Masyarakat, Keluhan Tentang Pelayanan, Dugaan Korupsi, Pungli dan
+                    gratifikasi, Dan Kritik Dan Saran</p>
             </a>
         </div>
 
@@ -505,8 +398,8 @@
     <script src="{!! asset('front/js/jquery.magnific-popup.min.js') !!}"></script>
     <script>
         /* ==================================================
-                    # Advisor Carousel
-                    ===============================================*/
+                        # Advisor Carousel
+                        ===============================================*/
         $('.advisor-carousel').owlCarousel({
             loop: false,
             margin: 30,

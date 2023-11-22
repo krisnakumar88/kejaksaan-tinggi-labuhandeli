@@ -7,6 +7,7 @@ use App\Models\Pejabatstruktural;
 use App\Models\Daftarpencarian;
 use App\Models\Sambutanketua;
 use App\Models\Hubungi;
+use App\Models\Subhalaman;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -14,7 +15,7 @@ class FrontController extends Controller
     public function index(){
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
-        
+
         return view("front.index", $send);
     }
 
@@ -53,5 +54,10 @@ class FrontController extends Controller
     public function sambutan(Sambutanketua $sambutanketua){
         $send['getData'] = Sambutanketua::all();
         return view('front.sambutanketua', $send);
+    }
+
+    public function subhalaman(Subhalaman $subhalaman){
+
+        return view('front.subhalaman', compact('subhalaman'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Halaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HalamanController extends Controller
 {
@@ -14,7 +15,8 @@ class HalamanController extends Controller
      */
     public function index()
     {
-        return response()->json(['code' => '200']);
+        $send['data'] = Halaman::all();
+        return view('admin.halaman', $send);
     }
 
     /**
@@ -35,7 +37,15 @@ class HalamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $this->validate($request, [
+            'nama' => 'required'
+        ]);
+
+        $validatedData['slug'] = Str::slug($validatedData['nama'], '-');
+
+        $kategori_halaman = Halaman::create($validatedData);
+
+        return redirect()->route('halaman.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -44,9 +54,15 @@ class HalamanController extends Controller
      * @param  \App\Models\Halaman  $halaman
      * @return \Illuminate\Http\Response
      */
-    public function show(Halaman $halaman)
+    public function show($halaman)
     {
-        //
+        $halaman = halaman::where('id', $halaman)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Halaman',
+            'data'    => $halaman
+        ]);
     }
 
     /**
@@ -67,9 +83,26 @@ class HalamanController extends Controller
      * @param  \App\Models\Halaman  $halaman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Halaman $halaman)
+    public function update(Request $request, $halaman)
     {
-        //
+        $halaman = halaman::where('id', $halaman)->first();
+
+        $halaman->update([
+            'slug' => ''
+        ]);
+
+        $this->validate($request, [
+            'nama' => 'required'
+        ]);
+
+        $data['slug'] = Str::slug($request->slug, '-');
+
+        $halaman->update([
+            'nama' => $request->nama,
+            'slug' => $data['slug']
+        ]);
+
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -78,8 +111,11 @@ class HalamanController extends Controller
      * @param  \App\Models\Halaman  $halaman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Halaman $halaman)
+    public function destroy($halaman)
     {
-        //
+        $halaman = halaman::where('id', $halaman)->first();
+
+        Halaman::destroy($halaman);
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

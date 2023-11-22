@@ -19,9 +19,9 @@
                     {{ session('success') }}
                 </div>
                 @endif
-                @if (session()->has('error'))
+                @if (session()->has('failed'))
                 <div class="alert alert-error" role="alert">
-                    {{ session('error') }}
+                    {{ session('failed') }}
                 </div>
                 @endif
 
@@ -40,7 +40,7 @@
                                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                                 <h5 class="modal-title mb-4 text-center">Tambah Daftar Pencarian Orang</h5>
                                 <div class="">
-                                    <form action="{{ route('daftarpencarian.store') }}" method="post">
+                                    <form action="{{ route('daftarpencarian.store') }}" method="post" enctype='multipart/form-data'>
                                         @csrf
                                         <hr>
                                         <div class="form-group">
