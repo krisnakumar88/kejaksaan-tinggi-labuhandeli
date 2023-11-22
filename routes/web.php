@@ -50,3 +50,6 @@ Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
 Route::get('/dpo', [FrontController::class,'dpo'])->name('dpo');
 
 Route::resource('/admin/sambutanketua', SambutanketuaController::class);
+
+Route::get('/hubungi', [FrontController::class,'hubungi'])->name('hubungi');
+Route::post('/hubungi', [FrontController::class,'pesan'])->name('pesan');
