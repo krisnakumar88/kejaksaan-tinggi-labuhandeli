@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Berita;
-use App\Models\File;
+use App\Models\Subhalaman;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\File;
+use App\Models\Halaman;
+use Illuminate\Support\Facades\Auth;
 
-class BeritaController extends Controller
+class SubhalamanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,9 @@ class BeritaController extends Controller
      */
     public function index()
     {
-        $send['data'] = Berita::all();
-        return view("admin.berita", $send);
+        $send['data'] = Subhalaman::all();
+        $send['kategori_halaman'] = Halaman::all();
+        return view('admin.subhalaman', $send);
     }
 
     /**
@@ -56,7 +57,8 @@ class BeritaController extends Controller
         }
 
         $validatedData = $this->validate($request, [
-            'judul' => 'required|min:3|max:255',
+            'id_halaman' => 'required',
+            'judul' => 'required|min:3',
             'content' => 'required|min:3'
         ]);
 
@@ -71,11 +73,10 @@ class BeritaController extends Controller
         $validatedData['foto'] = $file->id;
         $validatedData['user_id'] = Auth::user()->id;
 
-        $berita = berita::create($validatedData);
+        $berita = Subhalaman::create($validatedData);
         $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
-        return redirect()->route('berita.index')->with('success', 'Data Berhasil Ditambahkan');
-
+        return redirect()->route('subhalaman.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     public function upload_foto(Request $request)
@@ -108,27 +109,27 @@ class BeritaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Berita  $berita
+     * @param  \App\Models\Subhalaman  $subhalaman
      * @return \Illuminate\Http\Response
      */
-    public function show($berita)
+    public function show($subhalaman)
     {
-        $berita = Berita::where('id', $berita)->first();
+        $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
         return response()->json([
             'success' => true,
             'message' => 'Detail Data Post',
-            'data' => $berita
+            'data' => $subhalaman
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Berita  $berita
+     * @param  \App\Models\Subhalaman  $subhalaman
      * @return \Illuminate\Http\Response
      */
-    public function edit(Berita $berita)
+    public function edit(Subhalaman $subhalaman)
     {
         //
     }
@@ -137,17 +138,18 @@ class BeritaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Berita  $berita
+     * @param  \App\Models\Subhalaman  $subhalaman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $berita)
+    public function update(Request $request, $subhalaman)
     {
-        $berita = Berita::where('id', $berita)->first();
+        $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
         $this->validate($request, [
             'foto' => 'file|mimes:jpg,jpeg,bmp,png',
             'judul' => 'required|min:3|max:255',
-            'content' => 'required|min:3'
+            'content' => 'required|min:3',
+            'id_halaman' => 'required'
         ]);
 
         if ($request->hasFile('foto')) {
@@ -159,7 +161,7 @@ class BeritaController extends Controller
             $filenameSimpan = time() . '.' . $extension;
             $size = $request->file('foto')->getSize();
 
-            $foto = File::where('id', $berita->foto)->first();
+            $foto = File::where('id', $subhalaman->foto)->first();
 
             unlink(public_path('file/' . $foto->name));
 
@@ -171,16 +173,18 @@ class BeritaController extends Controller
                 'size' => $size
             ]);
 
-            $berita->update([
+            $subhalaman->update([
                 'foto' => $file->id,
                 'judul' => $request->judul,
-                'content' => $request->content
+                'content' => $request->content,
+                'id_halaman' => $request->id_halaman
             ]);
 
         } else {
-            $berita->update([
+            $subhalaman->update([
                 'judul' => $request->judul,
-                'content' => $request->content
+                'content' => $request->content,
+                'id_halaman' => $request->id_halaman
             ]);
         }
 
@@ -190,20 +194,20 @@ class BeritaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Berita  $berita
+     * @param  \App\Models\Subhalaman  $subhalaman
      * @return \Illuminate\Http\Response
      */
-    public function destroy($berita)
+    public function destroy($subhalaman)
     {
-        $berita = Berita::where('id', $berita)->first();
+        $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
         // Untuk menghapus Foto yang terhubung sama berita
-        $foto = File::where('id', $berita->foto)->first();
-        File::where('id', $berita->foto)->delete();
+        $foto = File::where('id', $subhalaman->foto)->first();
+        File::where('id', $subhalaman->foto)->delete();
         unlink(public_path('file/' . $foto->name));
         // akhir
 
-        Berita::destroy($berita);
+        Subhalaman::destroy($subhalaman);
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

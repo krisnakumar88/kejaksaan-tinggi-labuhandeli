@@ -9,7 +9,7 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Berita</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Sub Halaman</h6>
 
                 </div>
 
@@ -33,10 +33,10 @@
                                 <div class="modal-body pd-20 pd-sm-40">
                                     <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
                                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                                    <h5 class="modal-title mb-4 text-center">Tambah Berita</h5>
+                                    <h5 class="modal-title mb-4 text-center">Tambah Sub Halaman</h5>
                                     <div class="">
-                                        <form action="{{ route('berita.store') }}" method="post"
-                                        enctype='multipart/form-data'>
+                                        <form action="{{ route('subhalaman.store') }}" method="post"
+                                            enctype='multipart/form-data'>
                                             @csrf
                                             <hr>
                                             <div class="form-group">
@@ -48,6 +48,15 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
+                                            </div>
+                                            <hr>
+                                            <div class="form-group">
+                                                <label for="pilihhalaman">Kategori Halaman</label>
+                                                <select class="form-control" id="pilihhalaman" name="id_halaman">
+                                                    @foreach ($kategori_halaman as $halaman)
+                                                        <option value="{{ $halaman->id }}">{{ $halaman->nama }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <hr>
 
@@ -105,15 +114,15 @@
                                                         data-target="#modal-iframe-{{ $item->slug }}"
                                                         data-toggle="modal">Live Preview</button>
                                                     {{-- <a href="" class="dropdown-item">Detail</a> --}}
-                                                    <form action="{{ route('berita.destroy', $item->id) }}" method="post"
-                                                        class="form-delete">
+                                                    <form action="{{ route('subhalaman.destroy', $item->id) }}"
+                                                        method="post" class="form-delete">
                                                         @csrf
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <button type="submit" class="dropdown-item" data-toggle="tooltip"
                                                             id="delete-button">Delete</button>
                                                     </form>
-                                                    <button class="dropdown-item editberita"
-                                                        data-berita="{{ $item->id }}">Edit</button>
+                                                    <button class="dropdown-item editsubhalaman"
+                                                        data-subhalaman="{{ $item->id }}">Edit</button>
 
 
                                                 </div>
@@ -146,9 +155,10 @@
                                         <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
                                             data-dismiss="modal" type="button"><span
                                                 aria-hidden="true">&times;</span></button>
-                                        <h5 class="modal-title mb-4 text-center">Update Anggota</h5>
+                                        <h5 class="modal-title mb-4 text-center">Update Sub Halaman</h5>
                                         <div class="">
-                                            <form action="" method="post" id="form-update" enctype='multipart/form-data'>
+                                            <form action="" method="post" id="form-update"
+                                                enctype='multipart/form-data'>
                                                 @csrf
                                                 <input type="hidden" name="_method" value="PUT">
                                                 <hr>
@@ -157,6 +167,15 @@
                                                     <input class="form-control " required type="text" name="judul"
                                                         id="judul-edit" value="">
 
+                                                </div>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <label for="pilihhalaman">Kategori Halaman</label>
+                                                    <select class="form-control" id="pilihhalamanedit" name="id_halaman">
+                                                        @foreach ($kategori_halaman as $halaman)
+                                                            <option value="{{ $halaman->id }}">{{ $halaman->nama }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <hr>
 
@@ -200,7 +219,7 @@
     <script>
         CKEDITOR.replace('konten', {
 
-            filebrowserUploadUrl: "{{ route('upload_foto_berita', ['_token' => csrf_token()]) }}",
+            filebrowserUploadUrl: "{{ route('upload_foto_subhalaman', ['_token' => csrf_token()]) }}",
 
             filebrowserUploadMethod: 'form'
 
@@ -208,28 +227,31 @@
 
         CKEDITOR.replace('konten-edit', {
 
-            filebrowserUploadUrl: "{{ route('upload_foto_berita', ['_token' => csrf_token()]) }}",
+            filebrowserUploadUrl: "{{ route('upload_foto_subhalaman', ['_token' => csrf_token()]) }}",
 
             filebrowserUploadMethod: 'form'
 
         });
 
         $(document).ready(function() {
-            $('body').on('click', '.editberita', function() {
+            $('body').on('click', '.editsubhalaman', function() {
 
-                let post_id = $(this).data('berita');
+                let post_id = $(this).data('subhalaman');
                 $('#judul-edit').val("");
                 CKEDITOR.instances['konten-edit'].setData("");
+                $('#pilihhalamanedit').val("");
 
                 $.ajax({
-                    url: `/admin/berita/${post_id}`,
+                    url: `/admin/subhalaman/${post_id}`,
                     type: "GET",
                     cache: false,
                     success: function(response) {
 
                         $('#judul-edit').val(response.data.judul);
                         CKEDITOR.instances['konten-edit'].setData(response.data.content);
-                        $("#form-update").attr("action", "/admin/berita/" + response.data.id);
+                        $("#form-update").attr("action", "/admin/subhalaman/" + response.data.id);
+                        // $('#pilihhalamanedit[value="' + response.data.id_halaman + '"]').prop('selected', true);
+                        $('#pilihhalamanedit').val(response.data.id_halaman);
 
                         $('#modal-update').modal('show');
                     }

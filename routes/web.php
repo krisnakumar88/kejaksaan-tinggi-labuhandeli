@@ -11,7 +11,7 @@ use App\Http\Controllers\PejabatstrukturalController;
 use App\Http\Controllers\DaftarpencarianController;
 use App\Http\Controllers\SambutanketuaController;
 use App\Http\Controllers\HubungiController;
-
+use App\Http\Controllers\SubhalamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +30,8 @@ Route::get('/berita', [FrontController::class,'berita'])->name('front_berita');
 
 Route::get('/berita/{berita}', [FrontController::class, 'berita_detail'])->name('berita_detail');
 
+Route::get('/halaman/{subhalaman}', [FrontController::class, 'subhalaman'])->name('subhalaman');
+
 Route::get('/login', [LoginController::class,'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -42,8 +44,11 @@ Route::resource('/admin/berita', BeritaController::class);
 
 Route::post('/upload/fotoBerita', [BeritaController::class, 'upload_foto'])->name('upload_foto_berita');
 
-
 Route::resource('/admin/halaman', HalamanController::class);
+
+Route::resource('/admin/subhalaman', SubhalamanController::class);
+
+Route::post('/upload/fotoSubhalaman', [SubhalamanController::class, 'upload_foto'])->name('upload_foto_subhalaman');
 
 Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
 
