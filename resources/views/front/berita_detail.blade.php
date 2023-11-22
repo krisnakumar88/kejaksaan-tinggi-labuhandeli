@@ -26,7 +26,7 @@
                                             <li><a href="#"><i class="fas fa-comments"></i> 0 Komentar</a></li>
                                         </ul>
                                     </div>
-                                    {{ $berita->content }}
+                                    {!! $berita->content !!}
                                 </div>
                                 {{-- <div class="post-pagi-area">
                                     <div class="row">

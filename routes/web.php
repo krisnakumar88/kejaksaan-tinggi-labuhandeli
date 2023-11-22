@@ -39,6 +39,8 @@ Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admi
 
 Route::resource('/admin/berita', BeritaController::class);
 
+Route::post('/upload/fotoBerita', [BeritaController::class, 'upload_foto'])->name('upload_foto_berita');
+
 
 Route::resource('/admin/halaman', HalamanController::class);
 
