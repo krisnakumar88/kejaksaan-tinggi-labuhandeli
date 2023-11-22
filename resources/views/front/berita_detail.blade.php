@@ -1,6 +1,17 @@
 @extends('template.FrontTemplate')
 
 @section('konten')
+    <div class="breadcrumb-area shadow dark text-center bg-fixed text-light"
+        style="background-image: url({!! asset('front/img/bg-halaman') !!});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ $berita->judul }}</h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="blog-area full-blog right-sidebar full-blog default-padding">
         <div class="container">
             <div class="row">
@@ -9,11 +20,12 @@
                         <div class="item-box">
                             <div class="item">
                                 <div class="thumb">
-                                    <a href="#"><img
-                                            src="{{ asset("file") }}/{{ $berita->file->name }}"
+                                    <a href="#"><img src="{{ asset('file') }}/{{ $berita->file->name }}"
                                             alt="Thumb"></a>
                                     <div class="date">
-                                        <h4><span>{{ $berita->created_at->format('d') }}</span> {{ $berita->created_at->format('M') }}, {{ $berita->created_at->format('Y') }}</h4>
+                                        <h4><span>{{ $berita->created_at->format('d') }}</span>
+                                            {{ $berita->created_at->format('M') }}, {{ $berita->created_at->format('Y') }}
+                                        </h4>
                                     </div>
                                 </div>
                                 <div class="info">
@@ -22,8 +34,9 @@
                                     </h3>
                                     <div class="meta">
                                         <ul>
-                                            <li><a href="#"><i class="fas fa-user"></i> {{ $berita->user->name }}</a></li>
-                                            <li><a href="#"><i class="fas fa-comments"></i> 0 Komentar</a></li>
+                                            <li><a href="#"><i class="fas fa-user"></i> {{ $berita->user->name }}</a>
+                                            </li>
+                                            {{-- <li><a href="#"><i class="fas fa-comments"></i> 0 Komentar</a></li> --}}
                                         </ul>
                                     </div>
                                     {!! $berita->content !!}

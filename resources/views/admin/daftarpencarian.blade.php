@@ -19,9 +19,9 @@
                     {{ session('success') }}
                 </div>
                 @endif
-                @if (session()->has('error'))
+                @if (session()->has('failed'))
                 <div class="alert alert-error" role="alert">
-                    {{ session('error') }}
+                    {{ session('failed') }}
                 </div>
                 @endif
 
@@ -42,6 +42,7 @@
                                 <div class="">
                                     <form action="{{ route('daftarpencarian.store') }}" method="post"
                                         enctype="multipart/form-data">
+
                                         @csrf
                                         <hr>
                                         <div class="form-group">
@@ -294,3 +295,4 @@ $(document).ready(function() {
 @endif
 
 @endsection
+

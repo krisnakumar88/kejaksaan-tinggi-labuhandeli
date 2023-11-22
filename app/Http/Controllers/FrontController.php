@@ -7,6 +7,7 @@ use App\Models\Pejabatstruktural;
 use App\Models\Daftarpencarian;
 use App\Models\Sambutanketua;
 use App\Models\Hubungi;
+use App\Models\Subhalaman;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -15,7 +16,7 @@ class FrontController extends Controller
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
         $send['getKatasambutan']    = Sambutanketua::orderBy('id', 'desc')->first();
-        
+
         return view("front.index", $send);
     }
 
@@ -56,5 +57,10 @@ class FrontController extends Controller
         return view('front.sambutanketua', [
             'sambutanketua' => $sambutanketua
         ]);
+    }
+
+    public function subhalaman(Subhalaman $subhalaman){
+
+        return view('front.subhalaman', compact('subhalaman'));
     }
 }

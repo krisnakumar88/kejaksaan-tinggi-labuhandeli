@@ -37,6 +37,10 @@ class DaftarpencarianController extends Controller
      */
     public function store(Request $request)
     {
+        $dataFile = $request->validate([
+            'foto' => 'required|file|mimes:jpg,jpeg,png'
+        ]);
+
         if ($request->hasFile('foto')) {
             $filenameWithExt = $request->file('foto')->getClientOriginalName();
             $type = $request->file('foto')->getClientMimeType();
@@ -48,12 +52,12 @@ class DaftarpencarianController extends Controller
             return redirect()->back()->with('failed', 'Gambar Belum Masuk');
         }
 
-        $validatedData = $this->validate($request, [
+        $validatedData = $request->validate([
             'nama'       => 'required|min:3|max:255',
             'kasus'      => 'required|min:3|max:255',
             'keterangan' => 'required|min:3'
         ]);
-        
+
         $file = File::FirstOrCreate([
             'name' => $filenameSimpan,
             'type' => $type,
@@ -62,10 +66,45 @@ class DaftarpencarianController extends Controller
 
         $validatedData['foto'] = $file->id;
 
+        $dpo = Daftarpencarian::create($validatedData);
+
+        // $path = $request->file('foto')->storeAs('images', $filenameSimpan);
+
         $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
-        Daftarpencarian::create($validatedData);
+        // DB::commit();
+
         return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Ditambahkan');
+
+        // if ($request->hasFile('foto')) {
+        //     $filenameWithExt = $request->file('foto')->getClientOriginalName();
+        //     $type = $request->file('foto')->getClientMimeType();
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     $extension = $request->file('foto')->getClientOriginalExtension();
+        //     $filenameSimpan = time() . '.' . $extension;
+        //     $size = $request->file('foto')->getSize();
+        // } else {
+        //     return redirect()->back()->with('failed', 'Gambar Belum Masuk');
+        // }
+
+        // $validatedData = $this->validate($request, [
+        //     'nama'       => 'required|min:3|max:255',
+        //     'kasus'      => 'required|min:3|max:255',
+        //     'keterangan' => 'required|min:3'
+        // ]);
+
+        // $file = File::FirstOrCreate([
+        //     'name' => $filenameSimpan,
+        //     'type' => $type,
+        //     'size' => $size
+        // ]);
+
+        // $validatedData['foto'] = $file->id;
+
+        // $request->file('foto')->move(public_path('file'), $filenameSimpan);
+
+        // Daftarpencarian::create($validatedData);
+        // return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -148,8 +187,8 @@ class DaftarpencarianController extends Controller
                 'kasus'             => $request->kasus,
                 'keterangan'        => $request->keterangan
             ]);
-        };
-        
+        };        
+
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
@@ -169,6 +208,6 @@ class DaftarpencarianController extends Controller
 
         Daftarpencarian::destroy($daftarpencarian->id);
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
-        
+
     }
 }
