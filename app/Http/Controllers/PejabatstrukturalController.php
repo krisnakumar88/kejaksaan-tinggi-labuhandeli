@@ -74,9 +74,15 @@ class PejabatstrukturalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($pejabatstruktural)
     {
-        //
+        $pejabatstruktural = Pejabatstruktural::where('id', $pejabatstruktural)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Pejabat',
+            'data'    => $pejabatstruktural
+        ]);
     }
 
     /**
@@ -94,12 +100,57 @@ class PejabatstrukturalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $pejabatstruktural)
     {
-        //
+        $pejabatstruktural = Pejabatstruktural::where('id', $pejabatstruktural)->first();
+
+        $this->validate($request, [
+            'foto' => 'file|mimes:jpg,jpeg,bmp,png',
+            'nama' => 'required|min:3|max:255',
+            'jabatan' => 'required|min:3|max:255',
+            'tentang_pejabat' => 'required|min:3'
+        ]);
+
+        if ($request->hasFile('foto')) {
+
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $type = $request->file('foto')->getClientMimeType();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenameSimpan = time() . '.' . $extension;
+            $size = $request->file('foto')->getSize();
+
+            $foto = File::where('id', $pejabatstruktural->foto)->first();
+
+            unlink(public_path('file/' . $foto->name));
+
+            $request->file('foto')->move(public_path('file'), $filenameSimpan);
+
+            $file = File::FirstOrCreate([
+                'name' => $filenameSimpan,
+                'type' => $type,
+                'size' => $size
+            ]);
+
+            $pejabatstruktural->update([
+                'foto'              => $file->id,
+                'nama'              => $request->nama,
+                'jabatan'           => $request->jabatan,
+                'tentang_pejabat'   => $request->tentang_pejabat
+            ]);
+
+        }else {
+            $pejabatstruktural->update([
+                'nama'              => $request->nama,
+                'jabatan'           => $request->jabatan,
+                'tentang_pejabat'   => $request->tentang_pejabat
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     /**

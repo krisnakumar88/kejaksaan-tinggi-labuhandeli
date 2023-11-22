@@ -81,9 +81,6 @@ class HubungiController extends Controller
      */
     public function destroy(Hubungi $hubungi)
     {
-        $hubungi = Hubungi::where('id', $hubungi->id)->first();
-
-        Hubungi::destroy($hubungi->id);
-        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
+        //
     }
 }

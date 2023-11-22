@@ -40,7 +40,9 @@
                                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                                 <h5 class="modal-title mb-4 text-center">Tambah Daftar Pencarian Orang</h5>
                                 <div class="">
-                                    <form action="{{ route('daftarpencarian.store') }}" method="post" enctype='multipart/form-data'>
+                                    <form action="{{ route('daftarpencarian.store') }}" method="post"
+                                        enctype="multipart/form-data">
+
                                         @csrf
                                         <hr>
                                         <div class="form-group">
@@ -130,8 +132,8 @@
                                                 <button class="dropdown-item" data-toggle="tooltip" id="delete-button"
                                                     onclick="return confirm('Yakin hapus data?')">Delete</button>
                                             </form>
-                                            <button class="dropdown-item" data-target="#modal-update-{{ $item->id }}"
-                                                data-toggle="modal">Edit</button>
+                                            <button class="dropdown-item editdaftar"
+                                                data-daftar="{{ $item->id }}">Edit</button>
                                         </div>
 
                                     </div>
@@ -187,21 +189,19 @@
                     </div>
                     @endforeach
 
-
-                    @foreach ($data as $item)
-                    <div class="modal fade" id="modal-update-{{ $item->id }}">
+                    <div class="modal fade" id="modal-update">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-body pd-20 pd-sm-40">
                                     <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
                                         data-dismiss="modal" type="button"><span
                                             aria-hidden="true">&times;</span></button>
-                                    <h5 class="modal-title mb-4 text-center">Edit Data</h5>
+                                    <h5 class="modal-title mb-4 text-center">Update Data DPO</h5>
                                     <div class="">
-                                        <form action="{{ route('daftarpencarian.update', $item->id) }}" method="post"
-                                            enctype='multipart/form-data'>
+                                        <form action="" method="post" id="form-update" enctype='multipart/form-data'>
                                             @csrf
                                             <input type="hidden" name="_method" value="PUT">
+                                            <hr>
                                             <div class="form-group">
                                                 <label class="">Foto</label>
                                                 <div class="custom-file">
@@ -212,46 +212,29 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="">Nama</label>
-                                                <input class="form-control @error('nama') is-invalid @enderror" required
-                                                    type="text" name="nama" value="{{ old('nama', $item->nama) }}">
-                                                @error('nama')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
+                                                <label class="">Nama Lengkap</label>
+                                                <input class="form-control" required type="text" name="nama"
+                                                    id="edit-nama" value="">
                                             </div>
                                             <div class="form-group">
                                                 <label class="">Kasus</label>
-                                                <input class="form-control @error('kasus') is-invalid @enderror"
-                                                    required type="text" name="kasus"
-                                                    value="{{ old('kasus', $item->kasus) }}">
-                                                @error('kasus')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
+                                                <input class="form-control" required type="text" name="kasus"
+                                                    id="edit-kasus" value="">
                                             </div>
                                             <div class="form-group">
                                                 <label class="">Keterangan</label>
-                                                <textarea class="form-control @error('keterangan') is-invalid @enderror"
-                                                    type="text" name="keterangan" value="{{ old('keterangan') }}"
-                                                    required>{{ $item->keterangan }}</textarea>
-                                                @error('keterangan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-
+                                                <textarea class="form-control" name="keterangan"
+                                                    id="edit-keterangan"></textarea>
                                             </div>
                                             <hr>
                                             <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach
 
 
                 </div>
@@ -261,8 +244,29 @@
     </div>
 </div>
 
+
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script>
-CKEDITOR.replace('konten');
+$(document).ready(function() {
+    $('body').on('click', '.editdaftar', function() {
+        let post_id = $(this).data('daftar');
+
+        $.ajax({
+            url: `/admin/daftarpencarian/${post_id}`,
+            type: "GET",
+            cache: false,
+            success: function(response) {
+                // alert(response);
+                $('#edit-nama').val(response.data.nama);
+                $('#edit-kasus').val(response.data.kasus);
+                $('#edit-keterangan').val(response.data.keterangan);
+                $("#form-update").attr("action", "/admin/daftarpencarian/" + response.data.id);
+
+                $('#modal-update').modal('show');
+            }
+        });
+    });
+});
 </script>
 <script>
 document.querySelector('.custom-file-input').addEventListener('change', function(e) {
@@ -290,6 +294,5 @@ $(document).ready(function() {
 </script>
 @endif
 
-
-
 @endsection
+

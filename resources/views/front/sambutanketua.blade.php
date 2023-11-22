@@ -1,13 +1,12 @@
 @extends('template.FrontTemplate')
 
 @section('konten')
-@foreach($getData as $item)
 <div class="breadcrumb-area shadow dark text-center bg-fixed text-light"
     style="background-image: url(https://kejati-sumaterautara.kejaksaan.go.id/web/assets/img/kejati/bg-halaman.jpg);">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ $item->title }}</h1>
+                <h1>{{ $sambutanketua->title }}</h1>
 
             </div>
         </div>
@@ -24,13 +23,13 @@
                         <div class="item">
                             <div class="thumb">
                                 <a href="#"><img class="img-responsive center-block"
-                                        src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/ketua_063644.jpg"
+                                        src="{{ asset('file') }}/{{ $sambutanketua->file->name }}"
                                         alt="Thumb"></a>
 
                             </div>
                             <div class="info">
                                 <h3>
-                                    {{ $item->title }}
+                                    {{ $sambutanketua->title }}
                                 </h3>
                                 <div class="meta">
                                     <ul>
@@ -38,7 +37,7 @@
                                     </ul>
                                 </div>
                                 <!-- begin tentang -->
-                                {{ $item->tentang }}
+                                {!! $sambutanketua->tentang !!}
                             </div>
                         </div>
 
@@ -48,5 +47,4 @@
         </div>
     </div>
 </div>
-@endforeach
 @endsection

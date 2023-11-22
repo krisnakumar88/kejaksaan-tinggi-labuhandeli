@@ -115,7 +115,13 @@ class DaftarpencarianController extends Controller
      */
     public function show(Daftarpencarian $daftarpencarian)
     {
-        //
+        $daftarpencarian = Daftarpencarian::where('id', $daftarpencarian->id)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data DPO',
+            'data'    => $daftarpencarian
+        ]);
     }
 
     /**
@@ -138,7 +144,17 @@ class DaftarpencarianController extends Controller
      */
     public function update(Request $request, Daftarpencarian $daftarpencarian)
     {
+        $daftarpencarian = Daftarpencarian::where('id', $daftarpencarian->id)->first();
+
+        $this->validate($request, [
+            'foto'      => 'file|mimes:jpg,jpeg,bmp,png',
+            'nama'      => 'required|min:3|max:255',
+            'kasus'     => 'required|min:3|max:255',
+            'keterangan' => 'required|min:3'
+        ]);
+
         if ($request->hasFile('foto')) {
+
             $filenameWithExt = $request->file('foto')->getClientOriginalName();
             $type = $request->file('foto')->getClientMimeType();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -158,25 +174,20 @@ class DaftarpencarianController extends Controller
                 'size' => $size
             ]);
 
-            $rules = [
-                'foto'       => $file->id,
-                'nama'       => 'required|min:3|max:255',
-                'kasus'      => 'required|min:3|max:255',
-                'keterangan' => 'required|min:3'
-            ];
+            $daftarpencarian->update([
+                'foto'              => $file->id,
+                'nama'              => $request->nama,
+                'kasus'             => $request->kasus,
+                'keterangan'        => $request->keterangan
+            ]);
 
-            $validatedData = $request->validate($rules);
         } else {
-            $rules = [
-                'nama'       => 'required|min:3|max:255',
-                'kasus'      => 'required|min:3|max:255',
-                'keterangan' => 'required|min:3'
-            ];
-            $validatedData = $request->validate($rules);
-        };
-
-        Daftarpencarian::where('id', $daftarpencarian->id)
-                        ->update($validatedData);
+            $daftarpencarian->update([
+                'nama'              => $request->nama,
+                'kasus'             => $request->kasus,
+                'keterangan'        => $request->keterangan
+            ]);
+        };        
 
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }

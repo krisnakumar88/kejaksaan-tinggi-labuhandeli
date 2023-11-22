@@ -18,14 +18,14 @@
                     {{ session('success') }}
                 </div>
                 @endif
-                @if (session()->has('error'))
+                @if (session()->has('failed'))
                 <div class="alert alert-error" role="alert">
                     {{ session('error') }}
                 </div>
                 @endif
 
-                @foreach($data as $item)
-                <form action="{{ route('sambutanketua.update', $item->id) }}" enctype='multipart/form-data'>
+                <form action="{{ route('sambutanketua.update', $sambutanketua->id) }}" method="post"
+                    enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="form-group">
@@ -37,9 +37,9 @@
                     </div>
                     <div class="form-group">
                         <label class="">Title</label>
-                        <input class="form-control @error('nama') is-invalid @enderror" required type="text"
-                            name="title" value="{{ old('title', $item->title) }}">
-                        @error('nama')
+                        <input class="form-control @error('title') is-invalid @enderror" required type="text"
+                            name="title" value="{{ $sambutanketua->title }}">
+                        @error('title')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label class="">Sub Title</label>
                         <input class="form-control @error('nama') is-invalid @enderror" required type="text"
-                            name="subtitle" value="{{ old('subtitle', $item->subtitle) }}">
+                            name="subtitle" value="{{ $sambutanketua->subtitle }}">
                         @error('nama')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -58,8 +58,8 @@
                     <div class="form-group">
                         <label class="">Kata Sambutan</label>
                         <textarea class="form-control @error('tentang') is-invalid @enderror" type="text" name="tentang"
-                            value="{{ old('tentang', $item->tentang) }}" required>{{ $item->tentang }}</textarea>
-                        @error('keterangan')
+                            value="{{ $sambutanketua->tentang }}" required>{{ $sambutanketua->tentang }}</textarea>
+                        @error('tentang')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -73,13 +73,11 @@
                             Preview</button>
                     </div>
                 </form>
-                @endforeach
 
             </div>
         </div>
     </div>
 
-    @foreach ($data as $item)
     <div class="modal fade" id="modal-iframe">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -89,11 +87,10 @@
             </div>
         </div>
     </div>
-    @endforeach
 
     <div class="col-md-4">
         <div class="card shadow mb-4">
-            <img src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/ketua_063644.jpg" alt="">
+            <img src="{{ asset('file') }}/{{ $sambutanketua->file->name }}" alt="">
         </div>
     </div>
 </div>
