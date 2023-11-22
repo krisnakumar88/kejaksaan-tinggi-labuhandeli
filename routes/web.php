@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Models\Halaman;
 use App\Http\Controllers\PejabatstrukturalController;
 use App\Http\Controllers\DaftarpencarianController;
+use App\Http\Controllers\SambutanketuaController;
 
 
 
@@ -42,17 +43,11 @@ Route::resource('/admin/berita', BeritaController::class);
 
 Route::resource('/admin/halaman', HalamanController::class);
 
-/*
-============================ Routes Pejabat Struktural ============================
-*/
 Route::resource('/admin/pejabatstruktural', PejabatstrukturalController::class);
-/*
-============================ endroutes Pejabat Struktural ============================
-*/
-/*
-============================ Routes DPO ============================
-*/
+
 Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
+
 Route::get('/dpo', [FrontController::class,'dpo'])->name('dpo');
-/*
-============================ endroutes DPO ============================
+
+Route::resource('/admin/sambutanketua', SambutanketuaController::class);
+
