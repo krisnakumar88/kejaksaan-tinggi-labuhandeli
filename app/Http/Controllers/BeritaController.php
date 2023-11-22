@@ -86,15 +86,47 @@ class BeritaController extends Controller
         // }
     }
 
+    public function upload_foto(Request $request){
+        if($request->hasFile('upload')) {
+
+                        $filenamewithextension = $request->file('upload')->getClientOriginalName();
+
+                        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+                        $extension = $request->file('upload')->getClientOriginalExtension();
+
+                        $filenametostore = $filename.'_'.time().'.'.$extension;
+
+                        $request->file('upload')->move(public_path('file'), $filenametostore);
+
+                        $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+
+                        $url = asset('file/'.$filenametostore);
+
+                        $msg = 'Image successfully uploaded';
+
+                        $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+
+                        @header('Content-type: text/html; charset=utf-8');
+                        echo $re;
+    }
+}
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Berita  $berita
      * @return \Illuminate\Http\Response
      */
-    public function show(Berita $berita)
+    public function show($berita)
     {
-        //
+        $berita = Berita::where('id', $berita)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data berita',
+            'data'    => $berita
+        ]);
     }
 
     /**
@@ -117,7 +149,7 @@ class BeritaController extends Controller
      */
     public function update(Request $request, $berita)
     {
-        $berita = $berita = Berita::where('id', $berita)->first();
+        $berita = Berita::where('id', $berita)->first();
 
         $this->validate($request, [
             'foto' => 'file|mimes:jpg,jpeg,bmp,png',

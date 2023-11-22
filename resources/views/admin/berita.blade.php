@@ -112,9 +112,8 @@
                                                         <button type="submit" class="dropdown-item" data-toggle="tooltip"
                                                             id="delete-button">Delete</button>
                                                     </form>
-                                                    <button class="dropdown-item"
-                                                        data-target="#modal-update-{{ $item->id }}"
-                                                        data-toggle="modal">Edit</button>
+                                                    <button class="dropdown-item editberita"
+                                                        data-berita="{{ $item->id }}">Edit</button>
 
 
                                                 </div>
@@ -139,59 +138,53 @@
                             </div>
                         @endforeach
 
-                        @foreach ($data as $item)
-                            <div class="modal fade" id="modal-update-{{ $item->id }}">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body pd-20 pd-sm-40">
-                                            <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
-                                                data-dismiss="modal" type="button"><span
-                                                    aria-hidden="true">&times;</span></button>
-                                            <h5 class="modal-title mb-4 text-center">Update Anggota</h5>
-                                            <div class="">
-                                                <form action="{{ route('berita.update', $item->id) }}" method="post"
-                                                    enctype='multipart/form-data'>
-                                                    @csrf
-                                                    <input type="hidden" name="_method" value="PUT">
-                                                    <hr>
-                                                    <div class="form-group">
-                                                        <label class="">Judul</label>
-                                                        <input class="form-control @error('judul') is-invalid @enderror"
-                                                            required type="text" name="judul"
-                                                            value="{{ old('judul', $item->judul) }}">
-                                                        @error('judul')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
-                                                    <hr>
 
-                                                    <div class="form-group">
-                                                        <label class="">Foto</label>
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input"
-                                                                id="customFile" name="foto">
-                                                            <label class="custom-file-label" for="customFile">Choose
-                                                                file</label>
-                                                        </div>
+                        <div class="modal fade" id="modal-update">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body pd-20 pd-sm-40">
+                                        <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
+                                            data-dismiss="modal" type="button"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <h5 class="modal-title mb-4 text-center">Update Anggota</h5>
+                                        <div class="">
+                                            <form action="" method="post" id="form-update" enctype='multipart/form-data'>
+                                                @csrf
+                                                <input type="hidden" name="_method" value="PUT">
+                                                <hr>
+                                                <div class="form-group">
+                                                    <label class="">Judul</label>
+                                                    <input class="form-control " required type="text" name="judul"
+                                                        id="judul-edit" value="">
+
+                                                </div>
+                                                <hr>
+
+                                                <div class="form-group">
+                                                    <label class="">Foto</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="customFile"
+                                                            name="foto">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
                                                     </div>
-                                                    <hr>
-                                                    <div class="form-group">
-                                                        <label class="">Konten</label>
-                                                        <textarea name="content" class="ckeditor" id="konten-edit" rows="10" cols="80">{{ $item->content }}</textarea>
-                                                        <br>
-                                                        <button class="btn btn-primary" type="submit"
-                                                            id="submit">Submit</button>
-                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <label class="">Konten</label>
+                                                    <textarea name="content" class="ckeditor" id="konten-edit" rows="10" cols="80"></textarea>
+                                                    <br>
+                                                    <button class="btn btn-primary" type="submit"
+                                                        id="submit">Submit</button>
+                                                </div>
 
 
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+
 
 
 
@@ -202,36 +195,52 @@
         </div>
     </div>
 
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script>
-        CKEDITOR.replace('konten');
-        CKEDITOR.replace('konten-edit');
+        CKEDITOR.replace('konten', {
+
+            filebrowserUploadUrl: "{{ route('upload_foto_berita', ['_token' => csrf_token()]) }}",
+
+            filebrowserUploadMethod: 'form'
+
+        });
+
+        CKEDITOR.replace('konten-edit', {
+
+            filebrowserUploadUrl: "{{ route('upload_foto_berita', ['_token' => csrf_token()]) }}",
+
+            filebrowserUploadMethod: 'form'
+
+        });
+
+        $(document).ready(function() {
+            $('body').on('click', '.editberita', function() {
+
+                let post_id = $(this).data('berita');
+                $('#judul-edit').val("");
+                CKEDITOR.instances['konten-edit'].setData("");
+
+                $.ajax({
+                    url: `/admin/berita/${post_id}`,
+                    type: "GET",
+                    cache: false,
+                    success: function(response) {
+
+                        $('#judul-edit').val(response.data.judul);
+                        CKEDITOR.instances['konten-edit'].setData(response.data.content);
+                        $("#form-update").attr("action", "/admin/berita/" + response.data.id);
+
+                        $('#modal-update').modal('show');
+                    }
+                });
+            });
+        });
     </script>
     <script>
         document.querySelector('.custom-file-input').addEventListener('change', function(e) {
             this.nextElementSibling.innerText = this.files[0].name;
         });
     </script>
-    @if (session()->has('success'))
-        <script>
-            $(document).ready(function() {
-                setTimeout(() => {
-                    swal("Sukses", "{{ session('success') }}", "success");
-                }, 1000);
-            });
-        </script>
-    @endif
-
-    @if ($errors->any())
-        <script>
-            $(document).ready(function() {
-                setTimeout(() => {
-                    swal("Failed", 'Mohon Form Terisi Dengan Benar', "warning");
-                }, 1000);
-
-            });
-        </script>
-    @endif
-
-
 
 @endsection
