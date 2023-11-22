@@ -99,7 +99,47 @@ class DaftarpencarianController extends Controller
      */
     public function update(Request $request, Daftarpencarian $daftarpencarian)
     {
-        //
+        if ($request->hasFile('foto')) {
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $type = $request->file('foto')->getClientMimeType();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenameSimpan = time() . '.' . $extension;
+            $size = $request->file('foto')->getSize();
+
+            $foto = File::where('id', $daftarpencarian->foto)->first();
+
+            unlink(public_path('file/' . $foto->name));
+
+            $request->file('foto')->move(public_path('file'), $filenameSimpan);
+            
+            $file = File::FirstOrCreate([
+                'name' => $filenameSimpan,
+                'type' => $type,
+                'size' => $size
+            ]);
+
+            $rules = [
+                'foto'       => $file->id,
+                'nama'       => 'required|min:3|max:255',
+                'kasus'      => 'required|min:3|max:255',
+                'keterangan' => 'required|min:3'
+            ];
+            
+            $validatedData = $request->validate($rules);
+        } else {
+            $rules = [
+                'nama'       => 'required|min:3|max:255',
+                'kasus'      => 'required|min:3|max:255',
+                'keterangan' => 'required|min:3'
+            ];
+            $validatedData = $request->validate($rules);
+        };
+        
+        Daftarpencarian::where('id', $daftarpencarian->id)
+                        ->update($validatedData);
+
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -110,7 +150,14 @@ class DaftarpencarianController extends Controller
      */
     public function destroy(Daftarpencarian $daftarpencarian)
     {
+        $daftarpencarian = Daftarpencarian::where('id', $daftarpencarian->id)->first();
+
+        $foto = File::where('id', $daftarpencarian->foto)->first();
+        File::where('id', $daftarpencarian->foto)->delete();
+        unlink(public_path('file/' . $foto->name));
+
         Daftarpencarian::destroy($daftarpencarian->id);
-        return redirect()->route('daftarpencarian.index')->with('success', 'Data Berhasil Dihapus');
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
+        
     }
 }

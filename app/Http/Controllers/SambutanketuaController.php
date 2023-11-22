@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sambutanketua;
+use App\Models\File;
 use Illuminate\Http\Request;
 
 class SambutanketuaController extends Controller
@@ -58,7 +59,10 @@ class SambutanketuaController extends Controller
      */
     public function edit(Sambutanketua $sambutanketua)
     {
-        //
+        return view('admin.sambutanketua.edit', [
+            'sambutanketua' => $sambutanketua,
+            'data'          => Sambutanketua::all()
+        ]);
     }
 
     /**
@@ -70,7 +74,49 @@ class SambutanketuaController extends Controller
      */
     public function update(Request $request, Sambutanketua $sambutanketua)
     {
-        //
+        if ($request->hasFile('foto')) {
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $type = $request->file('foto')->getClientMimeType();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filenameSimpan = time() . '.' . $extension;
+            $size = $request->file('foto')->getSize();
+
+            $foto = File::where('id', $sambutanketua->foto)->first();
+
+            unlink(public_path('file/' . $foto->name));
+
+            $request->file('foto')->move(public_path('file'), $filenameSimpan);
+            
+            $file = File::FirstOrCreate([
+                'name' => $filenameSimpan,
+                'type' => $type,
+                'size' => $size
+            ]);
+
+            $rules = [
+                'foto'      => $file->id,
+                'title'     => 'required|min:3|max:255',
+                'subtitle'  => 'required|min:3|max:255',
+                'tentang'   => 'required|min:3'
+            ];
+            
+            $validatedData = $request->validate($rules);
+        } else {
+            $rules = [
+                'title'     => 'required|min:3|max:255',
+                'subtitle'  => 'required|min:3|max:255',
+                'tentang'   => 'required|min:3'
+            ];
+            $validatedData = $request->validate($rules);
+        };
+        
+        // $validatedData['user_id'] = auth()->user()->id;
+
+        Sambutanketua::where('id', $request->id)
+                        ->update($validatedData);
+
+        return redirect()->route('sambutanketua.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**

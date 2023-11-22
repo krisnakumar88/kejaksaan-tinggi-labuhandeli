@@ -10,7 +10,7 @@ use App\Models\Halaman;
 use App\Http\Controllers\PejabatstrukturalController;
 use App\Http\Controllers\DaftarpencarianController;
 use App\Http\Controllers\SambutanketuaController;
-
+use App\Http\Controllers\HubungiController;
 
 
 /*
@@ -52,3 +52,9 @@ Route::resource('/admin/daftarpencarian', DaftarpencarianController::class);
 Route::get('/dpo', [FrontController::class,'dpo'])->name('dpo');
 
 Route::resource('/admin/sambutanketua', SambutanketuaController::class);
+Route::get('/sambutan-ketua', [FrontController::class,'sambutan'])->name('sambutan');
+
+Route::get('/hubungi', [FrontController::class,'hubungi'])->name('hubungi');
+Route::post('/hubungi', [FrontController::class,'pesan'])->name('pesan');
+
+Route::resource('/admin/hubungi', HubungiController::class);

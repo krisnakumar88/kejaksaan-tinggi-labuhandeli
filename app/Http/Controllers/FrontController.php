@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Pejabatstruktural;
 use App\Models\Daftarpencarian;
+use App\Models\Sambutanketua;
+use App\Models\Hubungi;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -29,5 +31,27 @@ class FrontController extends Controller
     public function dpo(){
         $send['getDpo'] = Daftarpencarian::all();
         return view('front.dpo', $send);
+    }
+
+    public function hubungi(){
+        return view('front.hubungi');
+    }
+
+    public function pesan(Request $request){
+        $validatedData = $this->validate($request, [
+            'nama'       => 'required|min:3|max:255',
+            'email'       => 'required|min:3|max:255',
+            'nomortelp'      => 'required|min:3|max:255',
+            'pesan' => 'required|min:3'
+        ]);
+
+
+        Hubungi::create($validatedData);
+        return redirect()->route('hubungi')->with('success', 'Pesan Berhasil Dikirim');
+    }
+
+    public function sambutan(Sambutanketua $sambutanketua){
+        $send['getData'] = Sambutanketua::all();
+        return view('front.sambutanketua', $send);
     }
 }
