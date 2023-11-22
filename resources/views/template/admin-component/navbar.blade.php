@@ -78,12 +78,18 @@
             <span>Data DPO</span>
         </a>
     </li>
-    {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('situsterkait.index') }}" aria-expanded="true" aria-controls="dataSitus">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('sambutanketua.index') }}" aria-expanded="true" aria-controls="dataSitus">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Data Situs Terkait</span>
+            <span>Data Sambutan Ketua</span>
         </a>
-    </li>--}}
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="" aria-expanded="true" aria-controls="dataSitus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Data Hubungi</span>
+        </a>
+    </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     {{-- <li class="nav-item">
