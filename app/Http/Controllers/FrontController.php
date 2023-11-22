@@ -14,6 +14,7 @@ class FrontController extends Controller
     public function index(){
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
+        $send['getKatasambutan']    = Sambutanketua::orderBy('id', 'desc')->first();
         
         return view("front.index", $send);
     }
@@ -51,7 +52,9 @@ class FrontController extends Controller
     }
 
     public function sambutan(Sambutanketua $sambutanketua){
-        $send['getData'] = Sambutanketua::all();
-        return view('front.sambutanketua', $send);
+        $sambutanketua = Sambutanketua::orderBy('id', 'desc')->first();
+        return view('front.sambutanketua', [
+            'sambutanketua' => $sambutanketua
+        ]);
     }
 }

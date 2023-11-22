@@ -10,4 +10,8 @@ class Sambutanketua extends Model
     use HasFactory;
     protected $table = 'sambutan';
     protected $guarded = ['id'];
+
+    public function file(){
+        return $this->hasOne(File::class, 'id', 'foto');
+    }
 }

@@ -15,8 +15,10 @@ class SambutanketuaController extends Controller
      */
     public function index()
     {
-        $send['data'] = Sambutanketua::all();
-        return view("admin.sambutanketua", $send);
+        $sambutanketua = Sambutanketua::orderBy('id', 'desc')->first();
+        return view('admin.sambutanketua', [
+            'sambutanketua' => $sambutanketua
+        ]);
     }
 
     /**
@@ -48,7 +50,7 @@ class SambutanketuaController extends Controller
      */
     public function show(Sambutanketua $sambutanketua)
     {
-        //
+       //
     }
 
     /**
@@ -59,10 +61,7 @@ class SambutanketuaController extends Controller
      */
     public function edit(Sambutanketua $sambutanketua)
     {
-        return view('admin.sambutanketua.edit', [
-            'sambutanketua' => $sambutanketua,
-            'data'          => Sambutanketua::all()
-        ]);
+        //
     }
 
     /**
@@ -74,7 +73,18 @@ class SambutanketuaController extends Controller
      */
     public function update(Request $request, Sambutanketua $sambutanketua)
     {
+
+        //
+        $sambutanketua = Sambutanketua::where('id', $sambutanketua->id)->first();
+        $this->validate($request, [
+            'foto'      => 'file|mimes:jpg,jpeg,bmp,png',
+            'title'     => 'required|min:3|max:255',
+            'subtitle'  => 'required|min:3|max:255',
+            'tentang'   => 'required|min:3'
+        ]);
+
         if ($request->hasFile('foto')) {
+
             $filenameWithExt = $request->file('foto')->getClientOriginalName();
             $type = $request->file('foto')->getClientMimeType();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -87,36 +97,43 @@ class SambutanketuaController extends Controller
             unlink(public_path('file/' . $foto->name));
 
             $request->file('foto')->move(public_path('file'), $filenameSimpan);
-            
+
             $file = File::FirstOrCreate([
                 'name' => $filenameSimpan,
                 'type' => $type,
                 'size' => $size
             ]);
 
-            $rules = [
+            $sambutanketua->update([
                 'foto'      => $file->id,
-                'title'     => 'required|min:3|max:255',
-                'subtitle'  => 'required|min:3|max:255',
-                'tentang'   => 'required|min:3'
-            ];
-            
-            $validatedData = $request->validate($rules);
-        } else {
-            $rules = [
-                'title'     => 'required|min:3|max:255',
-                'subtitle'  => 'required|min:3|max:255',
-                'tentang'   => 'required|min:3'
-            ];
-            $validatedData = $request->validate($rules);
-        };
-        
-        // $validatedData['user_id'] = auth()->user()->id;
+                'title'     => $request->title,
+                'subtitle'  => $request->subtitle,
+                'tentang'   => $request->tentang
+            ]);
 
-        Sambutanketua::where('id', $request->id)
-                        ->update($validatedData);
+        }else {
+            $sambutanketua->update([
+                'title'     => $request->title,
+                'subtitle'  => $request->subtitle,
+                'tentang'   => $request->tentang
+            ]);
+        }
 
-        return redirect()->route('sambutanketua.index')->with('success', 'Data Berhasil Diubah');
+        return redirect()->back()->with('success', 'Data Berhasil Diubah');
+
+        //
+        // $rules = [
+        //     'title'     => 'required|min:3|max:255',
+        //     'subtitle'  => 'required|min:3|max:255',
+        //     'tentang'   => 'required|min:3'
+        // ];
+
+        // $validatedData = $request->validate($rules);
+
+        // Sambutanketua::where('id', $sambutanketua->id)
+        //                 ->update($validatedData);
+
+        // return redirect()->route('sambutanketua.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**

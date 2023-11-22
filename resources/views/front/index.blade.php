@@ -19,10 +19,6 @@
                                         <h3 data-animation="animated slideInLeft">Bersama Wujudkan</h3>
                                         <h1 data-animation="animated slideInUp">Humanis Etis Bermartabat Amanah
                                             Tertib</h1>
-                                        <p><a class="btn btn-light border btn-md" href="../../../halaman/sambutan-ketua"
-                                                data-animation="animated slideInUp">Sambutan</a> <a
-                                                class="btn btn-theme effect btn-md" href="../../../halaman/visi--misi"
-                                                data-animation="animated slideInUp">Visi Misi</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -245,32 +241,17 @@
         <div class="row">
             <div class="about-info">
                 <div class="col-md-5 thumb">
-                    <img src="http://kejati-sumaterautara.kejaksaan.go.id/storage/media/202204/ketua_063644.jpg"
+                    <img src="{{ asset('file') }}/{{ $getKatasambutan->file->name }}"
                         alt="Thumb">
                 </div>
                 <div class="col-md-7 info">
-                    <h5>Kepala Kejaksaan Tinggi Sumatera Utara</h5>
+                    <h5>{{ $getKatasambutan->subtitle }}</h5>
 
-                    <h2>IDIANTO, S.H, M.H</h2>
+                    <h2>{{ $getKatasambutan->title }}</h2>
                     <p>
-                        Saya, Idianto, S.H., M.H., mengucapkan selamat datang di Website Kejaksaan Tinggi Sumatera
-                        Utara.
-                        Saya menyambut baik keberadaan serta upaya pembenahan webiste ini. Hal itu tidak saja dalam
-                        rangka menjadikan Kejaksaan Tinggi Sumatera Utara menjadi lembaga yang lebih informatif dan
-                        fungsional, melainkan juga untuk mewujudkan peran Kejaksaan Tinggi Sumatera Utara yang lebih
-                        tegas, bersih, serta transparan, dalam menjalankan fungsinya.
-                        Merespon tuntutan masyarakat terhadap kinerja institusi Kejaksaan, Kejaksaan Republik
-                        Indonesia tengah berupaya melakukan reformasi birokrasi di yaitu dengan titik berat terhadap
-                        percepatan dan optimalisasi penanganan perkara, penerapan sistem teknologi informasi dalam
-                        penanganan perkara, penerapan sistem teknologi informasi terhadap laporan pengaduan dan
-                        redesign website Kejaksaan yang informatif dan accessible terhadap masyarakat.
-                        Webiste Kejaksaan Tinggi Sumatera Utara merupakan salah satu langkah penerapan teknologi
-                        informasi menuju reformasi birokrasi Kejaksaan dan bentuk aktualisasi Undang-Undang Nomor 14
-                        Tahun 2008 tentang Keterbukaan Informasi Publik yang mewajibkan seluruh badan publik untuk
-                        dapat mengelola informasi publik guna mewujudkan penyelenggaraan negara yang baik,
-                        transparan, efektif dan efisien...
+                        {!! strip_tags(Str::limit($getKatasambutan->tentang, 1000)) !!}
                     </p>
-                    <a href="https://kejati-sumaterautara.kejaksaan.go.id/halaman/sambutan-ketua"
+                    <a href="{{ route('sambutan') }}"
                         class="btn btn-dark border btn-md">Baca Selengkapnya</a>
 
                 </div>
@@ -423,8 +404,7 @@
                     @foreach($getPejabat as $itemsPejabat)
                     <div class="advisor-item">
                         <div class="info-box">
-                            <img src="{{ asset('file') }}/{{ $itemsPejabat->getFile->name }}"
-                                alt="Thumb">
+                            <img src="{{ asset('file') }}/{{ $itemsPejabat->getFile->name }}" alt="Thumb">
                             <div class="info-title">
                                 <h4>{{ $itemsPejabat->nama }}</h4>
                                 <span>{{ $itemsPejabat->jabatan }}</span>
@@ -646,8 +626,7 @@
                     @foreach($getDaftarpencarian as $itemsDaftar)
                     <div class="advisor-item">
                         <div class="info-box">
-                            <img src="{{ asset('file') }}/{{ $itemsDaftar->getFile->name }}"
-                                alt="Thumb">
+                            <img src="{{ asset('file') }}/{{ $itemsDaftar->getFile->name }}" alt="Thumb">
                             <div class="info-title">
                                 <h4>{{ $itemsDaftar->nama }}</h4>
                                 <span>{{ $itemsDaftar->kasus }}</span>

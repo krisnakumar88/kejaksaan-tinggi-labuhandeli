@@ -40,7 +40,7 @@
                                 <h5 class="modal-title mb-4 text-center">Tambah Pejabat Struktural</h5>
                                 <div class="">
                                     <form action="{{ route('pejabatstruktural.store') }}" method="post"
-                                        enctype='multipart/form-data'>
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <hr>
                                         <div class="form-group">
@@ -116,8 +116,8 @@
                                                 <button class="dropdown-item" data-toggle="tooltip" id="delete-button"
                                                     onclick="return confirm('Yakin hapus data?')">Delete</button>
                                             </form>
-                                            <button class="dropdown-item" data-target="#modal-update-{{ $item->id }}"
-                                                data-toggle="modal">Edit</button>
+                                            <button class="dropdown-item editpejabat"
+                                                data-pejabat="{{ $item->id }}">Edit</button>
                                         </div>
                                     </div>
                                 </td>
@@ -126,62 +126,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                @foreach ($data as $item)
-                <div class="modal fade" id="modal-update-{{ $item->id }}">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body pd-20 pd-sm-40">
-                                <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
-                                    data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                                <h5 class="modal-title mb-4 text-center">Update Anggota</h5>
-                                <div class="">
-                                    <form action="{{ route('pejabatstruktural.update', $item->id) }}" method="post"
-                                        enctype='multipart/form-data'>
-                                        @csrf
-                                        <input type="hidden" name="_method" value="PUT">
-                                        <hr>
-                                        <div class="form-group">
-                                            <label class="">Foto</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="customFile"
-                                                    name="foto">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Nama Pejabat Struktural</label>
-                                            <input class="form-control @error('nama') is-invalid @enderror" required
-                                                type="text" name="nama" value="{{ old('nama', $item->nama) }}">
-                                            @error('nama')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Jabatan</label>
-                                            <input class="form-control @error('jabatan') is-invalid @enderror" required
-                                                type="text" name="jabatan" value="{{ old('jabatan', $item->jabatan) }}">
-                                            @error('jabatan')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="">Tentang</label>
-                                            <textarea class="form-control" name="tentang_pejabat"
-                                                id="tentang_pejabat">{{ $item->tentang_pejabat }}</textarea>
-                                        </div>
-                                        <hr>
-                                        <button class="btn btn-primary" type="submit" id="submit">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
 
                 @foreach ($data as $item)
                 <div class="modal fade" id="modal-detail-{{ $item->id }}">
@@ -227,13 +171,81 @@
                 </div>
                 @endforeach
 
+                <div class="modal fade" id="modal-update">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body pd-20 pd-sm-40">
+                                <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
+                                    data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                <h5 class="modal-title mb-4 text-center">Update Data Pejabat Struktural</h5>
+                                <div class="">
+                                    <form action="" method="post" id="form-update" enctype='multipart/form-data'>
+                                        @csrf
+                                        <input type="hidden" name="_method" value="PUT">
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="">Foto</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="customFile"
+                                                    name="foto">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Nama Pejabat Struktural</label>
+                                            <input class="form-control" required type="text" name="nama" id="edit-nama"
+                                                value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Jabatan</label>
+                                            <input class="form-control" required type="text" name="jabatan"
+                                                id="edit-jabatan" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="">Tentang</label>
+                                            <textarea class="form-control" name="tentang_pejabat"
+                                                id="edit-tentang_pejabat"></textarea>
+                                        </div>
+                                        <hr>
+                                        <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
 
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script>
-CKEDITOR.replace('tentang');
+$(document).ready(function() {
+    $('body').on('click', '.editpejabat', function() {
+        let post_id = $(this).data('pejabat');
+        $('#judul-edit').val("");
+
+        $.ajax({
+            url: `/admin/pejabatstruktural/${post_id}`,
+            type: "GET",
+            cache: false,
+            success: function(response) {
+                // alert(response);
+                $('#edit-nama').val(response.data.nama);
+                $('#edit-jabatan').val(response.data.jabatan);
+                $('#edit-tentang_pejabat').val(response.data.tentang_pejabat);
+                $("#form-update").attr("action", "/admin/pejabatstruktural/" + response.data
+                    .id);
+
+                $('#modal-update').modal('show');
+            }
+        });
+    });
+});
 </script>
 <script>
 document.querySelector('.custom-file-input').addEventListener('change', function(e) {
