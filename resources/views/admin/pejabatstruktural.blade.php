@@ -107,7 +107,8 @@
                                         <button class="btn ripple btn-primary" data-toggle="dropdown">Action
                                             <i class="icon ion-ios-arrow-down tx-11 mg-l-3"></i></button>
                                         <div class="dropdown-menu">
-                                            <button href="" class="dropdown-item">Detail</button>
+                                            <button class="dropdown-item" data-target="#modal-detail-{{ $item->id }}"
+                                                data-toggle="modal">Detail</button>
                                             <form action="{{ route('pejabatstruktural.destroy', $item->id) }}"
                                                 method="post">
                                                 @method('delete')
@@ -176,6 +177,50 @@
                                         <hr>
                                         <button class="btn btn-primary" type="submit" id="submit">Submit</button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                @foreach ($data as $item)
+                <div class="modal fade" id="modal-detail-{{ $item->id }}">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body pd-20 pd-sm-40">
+                                <button aria-label="Close" class="close pos-absolute t-15 r-20 tx-26"
+                                    data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                <h5 class="modal-title mb-4 text-center">Detail Data</h5>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img width="240" src="{{ asset('file') }}/{{ $item->getFile->name }}" alt="">
+                                    </div>
+                                    <div class="col-8">
+                                        <table class="table table-bordered" id="dataTable">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Nama Pejabat Struktural</td>
+                                                    <td>{{ $item->nama }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jabatan</td>
+                                                    <td>{{ $item->jabatan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tentang</td>
+                                                    <td>{{ $item->tentang_pejabat }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                                <button aria-label="Close" class="btn btn-primary" data-dismiss="modal"
+                                    type="button">Kembali</button>
                             </div>
                         </div>
                     </div>

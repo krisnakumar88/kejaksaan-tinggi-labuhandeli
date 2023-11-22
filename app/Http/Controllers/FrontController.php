@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Pejabatstruktural;
 use App\Models\Daftarpencarian;
+use App\Models\Sambutanketua;
 use App\Models\Hubungi;
 use Illuminate\Http\Request;
 
@@ -47,5 +48,10 @@ class FrontController extends Controller
 
         Hubungi::create($validatedData);
         return redirect()->route('hubungi')->with('success', 'Pesan Berhasil Dikirim');
+    }
+
+    public function sambutan(Sambutanketua $sambutanketua){
+        $send['getData'] = Sambutanketua::all();
+        return view('front.sambutanketua', $send);
     }
 }

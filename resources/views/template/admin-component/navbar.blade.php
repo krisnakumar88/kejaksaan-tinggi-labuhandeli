@@ -85,7 +85,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="" aria-expanded="true" aria-controls="dataSitus">
+        <a class="nav-link" href="{{ route('hubungi.index') }}" aria-expanded="true" aria-controls="dataSitus">
             <i class="fas fa-fw fa-cog"></i>
             <span>Data Hubungi</span>
         </a>

@@ -105,11 +105,18 @@ class PejabatstrukturalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Pejabatstruktural  $pejabatstruktural
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pejabatstruktural $pejabatstruktural)
     {
-        //
+        $pejabatstruktural = Pejabatstruktural::where('id', $pejabatstruktural->id)->first();
+
+        $foto = File::where('id', $pejabatstruktural->foto)->first();
+        File::where('id', $pejabatstruktural->foto)->delete();
+        unlink(public_path('file/' . $foto->name));
+
+        Pejabatstruktural::destroy($pejabatstruktural->id);
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }
