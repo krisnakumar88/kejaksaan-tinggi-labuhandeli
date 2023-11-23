@@ -2,7 +2,7 @@
 
 @section('konten')
     <div class="breadcrumb-area shadow dark text-center bg-fixed text-light"
-        style="background-image: url(https://kejati-sumaterautara.kejaksaan.go.id/web/assets/img/kejati/bg-berita.jpg);">
+        style="background-image: url({!! asset('front/img/bg-berita.jpg') !!});">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -20,7 +20,7 @@
         <div class="container">
             <div class="row">
                 <div class="blog-items">
-                    <div class="blog-content col-md-8">
+                    <div class="blog-content col-md-12">
 
                         @foreach ($berita as $data)
                             <div class="single-item">
@@ -321,7 +321,7 @@
                         </div>
                     </div>
                     <!-- Start Sidebar -->
-                    <div class="sidebar col-md-4">
+                    {{-- <div class="sidebar col-md-4">
                         <aside>
 
                             <!-- Start Sidebar Item -->
@@ -504,7 +504,7 @@
                             <!-- End Sidebar Item -->
 
                         </aside>
-                    </div>
+                    </div> --}}
                     <!-- End Start Sidebar -->
                 </div>
             </div>

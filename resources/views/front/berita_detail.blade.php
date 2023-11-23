@@ -2,7 +2,7 @@
 
 @section('konten')
     <div class="breadcrumb-area shadow dark text-center bg-fixed text-light"
-        style="background-image: url({!! asset('front/img/bg-halaman') !!});">
+        style="background-image: url({!! asset('front/img/bg-berita.jpg') !!});">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="blog-items">
-                    <div class="blog-content col-md-8">
+                    <div class="blog-content col-md-12">
                         <div class="item-box">
                             <div class="item">
                                 <div class="thumb">
@@ -41,70 +41,11 @@
                                     </div>
                                     {!! $berita->content !!}
                                 </div>
-                                {{-- <div class="post-pagi-area">
-                                    <div class="row">
-                                        <div class="col-md-6"><a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis"><i
-                                                    class="fas fa-angle-double-left"></i> Berita Sebelumnya</a></div>
-                                        <div class="col-md-6 text-right"><a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat">Berita
-                                                Selanjutnya <i class="fas fa-angle-double-right"></i></a></div>
-                                    </div>
-                                </div>
-
-                                <div class="comments-area">
-                                    <div class="comments-title">
-                                        <h4>
-                                            0 komentar
-                                        </h4>
-                                        <div class="comments-list">
-                                        </div>
-                                    </div>
-                                    <div class="comments-form">
-                                        <div class="title">
-                                            <h4>Silahkan berkomentar</h4>
-                                        </div>
-                                        <span id="alert-area"></span>
-                                        <form id="komentar"><input type="hidden" name="_token"
-                                                value="PtGI11jqBwWdLVQ4eePM2ortq7ePvdJRcXFTPL9L"> <input type="hidden"
-                                                name="post_id" value="881">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <!-- Name -->
-                                                        <input name="name" class="form-control" placeholder="Nama *"
-                                                            type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <!-- Email -->
-                                                        <input name="contact" class="form-control"
-                                                            placeholder="Email/Telepon *" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group comments">
-                                                        <!-- Comment -->
-                                                        <textarea name="content" class="form-control" placeholder="Komentar/Saran"></textarea>
-                                                    </div>
-                                                    <div class="form-group pull-right">
-                                                        <div class="g-recaptcha"
-                                                            data-sitekey="6Ldw_rIUAAAAAOHVZMrvP0aw2Ug17AQfxB5S7MSg"></div>
-                                                    </div>
-                                                    <div class="form-group full-width submit">
-                                                        <button type="submit">Kirim Komentar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
                     <!-- Start Sidebar -->
-                    <div class="sidebar col-md-4">
+                    {{-- <div class="sidebar col-md-4">
                         <aside>
 
                             <!-- Start Sidebar Item -->
@@ -287,7 +228,7 @@
                             <!-- End Sidebar Item -->
 
                         </aside>
-                    </div>
+                    </div> --}}
                     <!-- End Start Sidebar -->
                 </div>
             </div>

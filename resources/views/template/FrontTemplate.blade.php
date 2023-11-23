@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Website informasi untuk Kejati Sumatera Utara">
     <!-- ========== Page Title ========== -->
-    <title>Kejati Website</title>
+    <title>CABANG KEJAKSAAN NEGERI DELI SERDANG DI LABUHAN DELI</title>
     <!-- ========== Favicon Icon ========== -->
     <link rel="shortcut icon" href="{!! asset('front/img/logo-mini.png') !!}" type="image/x-icon">
     <!-- ========== Start Stylesheet ========== -->
@@ -78,10 +78,10 @@
         <div class="container">
             <div class="row">
                 <div class="col bg-header hidden-xs">
-                    <img src="{!! asset('front/img/logo_kejaksaan-removebg.png') !!}" class="" width="100" height="100">
+                    <img src="{!! asset('front/img/logo-kejaksaan.png') !!}" class="" >
                 </div>
                 <div class="col text-center visible-xs">
-                    <img src="{!! asset('front/img/logo_kejaksaan-removebg.png') !!}" class="" width="100" height="100">
+                    <img src="{!! asset('front/img/logo-kejaksaan.png') !!}" class="" >
                 </div>
             </div>
         </div>
@@ -121,6 +121,9 @@
                     <ul class="nav navbar-nav navbar-left" data-in="#" data-out="#">
                         {{-- {{ App\Models\ }} --}}
 
+                        {{-- <li><a href="{{ Route('sambutan') }}">Sambutan Ketua</a></li>
+                        <li><a href="{{ Route('front_berita') }}">Berita</a></li>
+                        <li><a href="{{ Route('dpo') }}">DPO</a></li> --}}
                         <?php
 
                         $category = App\Models\Halaman::all();
@@ -135,42 +138,40 @@
                             <a href="#" class="dropdown-toggle active" data-toggle="dropdown">{{ $value->nama }}</a>
                             <ul class="dropdown-menu">
                                 @foreach ($subhalaman as $data)
+                                <?php
+
+                                if ($data->link != "") { ?>
+                                <li><a href="{{ $data->link }}">{{ $data->judul }}</a></li>
+                                <?php
+                                }else { ?>
                                 <li><a href="{{ route('subhalaman', $data->slug) }}">{{ $data->judul }}</a></li>
+                                <?php
+                                }
+
+                                ?>
+
                                 @endforeach
                             </ul>
                         </li>
-
-
-
                         <?php
-
                         }
-
                         ?>
-                        <li><a href="https://kejati-sumaterautara.kejaksaan.go.id/hubungi">Hubungi</a></li>
+                        <li><a href="{{ Route('hubungi') }}">Hubungi</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
-
         </nav>
         <!-- End Navigation -->
-
     </header>
     <!-- End Main Menu -->
-
-
     @yield('konten')
-
-
-
-
     <!-- Start Footer
     ============================================= -->
     <footer class="bg-dark default-padding-top text-light">
         <div class="container">
             <div class="row">
                 <div class="f-items">
-                    <div class="col-md-3 item">
+                    <div class="col-md-4 item">
                         <div class="f-item">
                             <h4>Kontak Kami</h4>
                             <p><i class="fas fa-phone" style="margin-right: 10px"></i> 061-6851213</p>
@@ -183,15 +184,15 @@
                                 {{ route('halaman_utama') }}</p>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 item">
+                    {{-- <div class="col-md-3 col-sm-6 item">
                         <div class="f-item link">
                             <h4>Statistik Pengunjung</h4>
                             <p>Pengunjung Hari ini : 0</p>
                             <p>Hits hari ini : 0</p>
                             <p>Total pengunjung : 0</p>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 item">
+                    </div> --}}
+                    <div class="col-md-4 col-sm-12 item">
                         <div class="f-item link">
                             <h4>Situs Terkait</h4>
                             <ul
@@ -200,80 +201,12 @@
                                     max-height: 200px;
                                     overflow-y: scroll;
                                 ">
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Medan </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Karo </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Dairi </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Tapanuli Utara </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Toba Samosir </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Padang Sidimpuan </a></li>
-                                <li><a target="_blank"
-                                        href="https://kejari-tapanuliselatan.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Tapanuli Selatan </a></li>
-                                <li><a target="_blank"
-                                        href="https://kejari-padanglawasutara.kejaksaan.go.id/">Kejaksaan Negeri Padang
-                                        Lawas Utara </a></li>
-                                <li><a target="_blank" href="http://kejari-labuhanbatuselatan.go.id/">Kejaksaan Negeri
-                                        Labuhan Batu Selatan </a></li>
-                                <li><a target="_blank" href="https://kejari-deliserdang.go.id/">Kejaksaan Negeri Deli
-                                        Serdang </a></li>
-                                <li><a target="_blank" href="https://kejari-simalungun.kejaksaan.go.id/">Kejaksaan
-                                        Negeri Simalungun </a></li>
-                                <li><a target="_blank" href="https://kejari.langkatkab.go.id/">Kejaksaan Negeri
-                                        Langkat </a></li>
-                                <li><a target="_blank" href="https://kejari-serdangbedagai.kejaksaan.go.id/">Kejaksaan
-                                        Negeri Serdang Bedagai </a></li>
-                                <li><a target="_blank"
-                                        href="https://kejari-humbanghasundutan.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Humbang Hasundutan </a></li>
-                                <li><a target="_blank" href="https://kejari-asahan.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Asahan </a></li>
-                                <li><a target="_blank" href="https://kejari-binjai.go.id/">Kejaksaan Negeri Binjai
-                                    </a></li>
-                                <li><a target="_blank"
-                                        href="https://kejari-pematangsiantar.kejaksaan.go.id/index.html">Kejaksaan
-                                        Negeri Pematang Siantar </a></li>
-                                <li><a target="_blank" href="https://kejari-sibolga.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Sibolga </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Tebing Tinggi </a></li>
-                                <li><a target="_blank"
-                                        href="https://kejari-tanjungbalaiasahan.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Tanjung Balai </a></li>
-                                <li><a target="_blank" href="https://kejari-samosir.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Samosir </a></li>
-                                <li><a target="_blank" href="https://kejari-padanglawas.go.id/">Kejaksaan Negeri
-                                        Padang Lawas </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Mandaling Natal </a></li>
-                                <li><a target="_blank" href="https://kejari-labuhanbatu.go.id/">Kejaksaan Negeri
-                                        Labuhan Batu </a></li>
-                                <li><a target="_blank" href="https://kejari-batubara.kejaksaan.go.id/">Kejaksaan
-                                        Negeri Batubara </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Gunung Sitoli </a></li>
-                                <li><a target="_blank" href="#">Kejaksaan Negeri Nias Selatan </a></li>
-                                <li><a target="_blank" href="https://kejari-belawan.kejaksaan.go.id/">Kejaksaan Negeri
-                                        Belawan </a></li>
-                                <li><a target="_blank" href="#">Cabjari Mandailing Natal di Kota Nopan </a></li>
-                                <li><a target="_blank" href="#">Cabjari Karo di Tiga Binanga </a></li>
-                                <li><a target="_blank" href="#">Cabjari Taput di Siborongborong </a></li>
-                                <li><a target="_blank"
-                                        href="https://cabjari-deliserdangdipancurbatu.kejaksaan.go.id/">Cabjari Deli
-                                        Serdang di Pancur Batu </a></li>
-                                <li><a target="_blank" href="#">Cabjari Toba Samosir di Porsea </a></li>
-                                <li><a target="_blank" href="#">Cabjari Mandailing Natal di Natal </a></li>
-                                <li><a target="_blank" href="#">Cabjari Deli Serdang di Labuhan Deli </a></li>
-                                <li><a target="_blank" href="#">Cabjari Langkat di Pangkalan Brandan </a></li>
-                                <li><a target="_blank" href="#">Cabjari Nias Selatan di Pulau Tello </a></li>
-                                <li><a target="_blank" href="https://pt-medan.go.id/">Pengadilan Tinggi Medan </a>
-                                </li>
-                                <li><a target="_blank" href="https://www.pn-medankota.go.id/v3/">Pengadilan Negeri
-                                        Medan </a></li>
-                                <li><a target="_blank" href="https://www.sumutprov.go.id/">Pemerintah Provinsi
-                                        Sumatera Utara </a></li>
-                                <li><a target="_blank" href="http://www.sumut.polri.go.id/">Kepolisian Daerah Sumatera
-                                        Utara </a></li>
+
+                                <li><a target="_blank" href="https://sipp.pn-lubukpakam.go.id">Sistem Informasi Penelusuran Perkara Pengadilan Negeri Lubuk Pakam </a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3 item">
+                    <div class="col-md-4 item">
                         <div class="f-item address">
                             <h4>Sosial Media</h4>
                             <ul>

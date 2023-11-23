@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Gedung Kantor</h1>
+                    <h1>{{ $subhalaman->judul }}</h1>
 
                 </div>
             </div>

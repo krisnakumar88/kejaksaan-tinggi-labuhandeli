@@ -54,30 +54,54 @@
                                                 <label for="pilihhalaman">Kategori Halaman</label>
                                                 <select class="form-control" id="pilihhalaman" name="id_halaman">
                                                     @foreach ($kategori_halaman as $halaman)
-                                                        <option value="{{ $halaman->id }}">{{ $halaman->nama }}</option>
+                                                        <option value="{{ $halaman->id }}">{{ $halaman->nama }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <hr>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="use-link">
+                                                <label class="custom-control-label" for="use-link">Pakai Link</label>
+                                            </div>
 
-                                            <div class="form-group">
-                                                <label class="">Foto</label>
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="customFile"
-                                                        name="foto">
-                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                            <hr>
+                                            <div id="form-link">
+                                                <div class="form-group">
+                                                    <label class="">Link</label>
+                                                    <input class="form-control @error('link') is-invalid @enderror" required
+                                                        type="text" name="link" value="{{ old('link') }}">
+                                                    @error('link')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="form-group">
-                                                <label class="">Konten</label>
-                                                <textarea name="content" id="konten" rows="10" cols="80">
+                                            <div id="form-not-link">
+                                                <hr>
 
-                                                </textarea>
-                                                <br>
-                                                <button class="btn btn-primary" type="submit"
-                                                    id="submit">Submit</button>
+                                                <div class="form-group">
+                                                    <label class="">Foto</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="customFile"
+                                                            name="foto">
+                                                        <label class="custom-file-label" for="customFile">Choose
+                                                            file</label>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <label class="">Konten</label>
+                                                    <textarea name="content" id="konten" rows="10" cols="80">
+
+                                                    </textarea>
+                                                    <br>
+
+                                                </div>
                                             </div>
+                                            <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+
                                         </form>
                                     </div>
 
@@ -139,7 +163,7 @@
                                 <div class="modal-dialog modal-xl" role="document">
                                     <div class="modal-content">
                                         <div class="modal-body pd-20 pd-sm-40">
-                                            <iframe src="{{ route('berita_detail', $item->slug) }}" height="1000"
+                                            <iframe src="{{ route('subhalaman', $item->slug) }}" height="1000"
                                                 width="1000" title="KONTEN"></iframe>
                                         </div>
                                     </div>
@@ -173,29 +197,47 @@
                                                     <label for="pilihhalaman">Kategori Halaman</label>
                                                     <select class="form-control" id="pilihhalamanedit" name="id_halaman">
                                                         @foreach ($kategori_halaman as $halaman)
-                                                            <option value="{{ $halaman->id }}">{{ $halaman->nama }}</option>
+                                                            <option value="{{ $halaman->id }}">{{ $halaman->nama }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <hr>
 
-                                                <div class="form-group">
-                                                    <label class="">Foto</label>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="customFile"
-                                                            name="foto">
-                                                        <label class="custom-file-label" for="customFile">Choose
-                                                            file</label>
+
+                                                <div id="form-link-edit">
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <label class="">Link</label>
+                                                        <input class="form-control @error('link') is-invalid @enderror"
+                                                            required type="text" name="link"
+                                                            id="link-edit">
                                                     </div>
                                                 </div>
-                                                <hr>
-                                                <div class="form-group">
-                                                    <label class="">Konten</label>
-                                                    <textarea name="content" class="ckeditor" id="konten-edit" rows="10" cols="80"></textarea>
-                                                    <br>
-                                                    <button class="btn btn-primary" type="submit"
-                                                        id="submit">Submit</button>
+                                                <div id="form-not-link-edit">
+                                                    <hr>
+
+                                                    <div class="form-group">
+                                                        <label class="">Foto</label>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input"
+                                                                id="customFile" name="foto">
+                                                            <label class="custom-file-label" for="customFile">Choose
+                                                                file</label>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <label class="">Konten</label>
+                                                        <textarea name="content" id="konten-edit" rows="10" cols="80">
+
+                                                        </textarea>
+                                                        <br>
+
+                                                    </div>
                                                 </div>
+
+                                                <button class="btn btn-primary" type="submit"
+                                                    id="submit">Submit</button>
 
 
                                         </div>
@@ -234,28 +276,72 @@
         });
 
         $(document).ready(function() {
+            $('#form-link').hide();
             $('body').on('click', '.editsubhalaman', function() {
 
                 let post_id = $(this).data('subhalaman');
                 $('#judul-edit').val("");
                 CKEDITOR.instances['konten-edit'].setData("");
                 $('#pilihhalamanedit').val("");
+                $('#link-edit').val("");
+
 
                 $.ajax({
                     url: `/admin/subhalaman/${post_id}`,
                     type: "GET",
                     cache: false,
                     success: function(response) {
+                        if (response.data.link != "") {
+                            $('#form-link-edit').show();
+                            $('#form-not-link-edit').hide();
+                            $('#judul-edit').val(response.data.judul);
+                            $('#pilihhalamanedit').val(response.data.id_halaman);
+                            $("#form-update").attr("action", "/admin/subhalaman/" + response
+                                .data
+                                .id);
+                            $('#link-edit').val(response.data.link);
+                            $('#modal-update').modal('show');
 
-                        $('#judul-edit').val(response.data.judul);
-                        CKEDITOR.instances['konten-edit'].setData(response.data.content);
-                        $("#form-update").attr("action", "/admin/subhalaman/" + response.data.id);
-                        // $('#pilihhalamanedit[value="' + response.data.id_halaman + '"]').prop('selected', true);
-                        $('#pilihhalamanedit').val(response.data.id_halaman);
 
-                        $('#modal-update').modal('show');
+
+
+                        } else {
+                            $('#form-link-edit').hide();
+                            $('#form-not-link-edit').show();
+                            $('#judul-edit').val(response.data.judul);
+                            CKEDITOR.instances['konten-edit'].setData(response.data.content);
+                            $("#form-update").attr("action", "/admin/subhalaman/" + response
+                                .data
+                                .id);
+                            $('#pilihhalamanedit').val(response.data.id_halaman);
+
+                            $('#modal-update').modal('show');
+
+                        }
+
+
                     }
                 });
+            });
+
+            $('#use-link').on('change', function() {
+                if (this.checked) {
+                    $('#form-link').show(300);
+                    $('#form-not-link').hide(200);
+                } else {
+                    $('#form-link').hide(200);
+                    $('#form-not-link').show(300);
+                };
+            });
+
+            $('#use-link-edit').on('change', function() {
+                if (this.checked) {
+                    $('#form-link-edit').show(300);
+                    $('#form-not-link-edit').hide(200);
+                } else {
+                    $('#form-link-edit').hide(200);
+                    $('#form-not-link-edit').show(300);
+                };
             });
         });
     </script>

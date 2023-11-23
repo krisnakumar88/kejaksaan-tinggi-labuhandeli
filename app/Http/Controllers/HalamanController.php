@@ -41,8 +41,6 @@ class HalamanController extends Controller
             'nama' => 'required'
         ]);
 
-        $validatedData['slug'] = Str::slug($validatedData['nama'], '-');
-
         $kategori_halaman = Halaman::create($validatedData);
 
         return redirect()->route('halaman.index')->with('success', 'Data Berhasil Ditambahkan');
@@ -87,19 +85,12 @@ class HalamanController extends Controller
     {
         $halaman = halaman::where('id', $halaman)->first();
 
-        $halaman->update([
-            'slug' => ''
-        ]);
-
         $this->validate($request, [
             'nama' => 'required'
         ]);
 
-        $data['slug'] = Str::slug($request->slug, '-');
-
         $halaman->update([
-            'nama' => $request->nama,
-            'slug' => $data['slug']
+            'nama' => $request->nama
         ]);
 
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
@@ -115,7 +106,7 @@ class HalamanController extends Controller
     {
         $halaman = halaman::where('id', $halaman)->first();
 
-        Halaman::destroy($halaman);
+        $halaman->delete();
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -16,6 +16,7 @@ class FrontController extends Controller
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
         $send['getKatasambutan']    = Sambutanketua::orderBy('id', 'desc')->first();
+        $send['beritaTerbaru']      = Berita::all()->take(3);
 
         return view("front.index", $send);
     }

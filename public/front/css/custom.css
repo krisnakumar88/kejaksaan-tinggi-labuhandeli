@@ -53,7 +53,7 @@
 }
 
 .bg-header {
-    background-image: url("../assets/img/kejati/logo_rb.png");
+    background-image: url("/front/img/logo_rb.png");
     background-repeat: no-repeat;
     height: 120px;
     background-position: right center;

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\File;
 use App\Models\Halaman;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\Type\NullType;
 
 class SubhalamanController extends Controller
 {
@@ -41,40 +42,65 @@ class SubhalamanController extends Controller
      */
     public function store(Request $request)
     {
-        $dataFile = $request->validate([
-            'foto' => 'required|file|mimes:jpg,jpeg,bmp,png'
-        ]);
 
-        if ($request->hasFile('foto')) {
-            $filenameWithExt = $request->file('foto')->getClientOriginalName();
-            $type = $request->file('foto')->getClientMimeType();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('foto')->getClientOriginalExtension();
-            $filenameSimpan = time() . '.' . $extension;
-            $size = $request->file('foto')->getSize();
+        // dd($request);
+        if ($request->link != "") {
+
+            $validatedData = $this->validate($request, [
+                'id_halaman' => 'required',
+                'judul' => 'required|min:3',
+                'link' => 'required'
+            ]);
+
+            $validatedData['user_id'] = Auth::user()->id;
+
+            $berita = Subhalaman::create([
+                'id_halaman' => $validatedData['id_halaman'],
+                'judul' => $validatedData['judul'],
+                'link' => $validatedData['link'],
+                'content' => "",
+                'foto' => "",
+                'slug' => "",
+                'user_id' => Auth::user()->id
+            ]);
+
         } else {
-            return redirect()->back()->with('failed', 'Gambar Belum Masuk');
+            $dataFile = $request->validate([
+                'foto' => 'required|file|mimes:jpg,jpeg,bmp,png'
+            ]);
+
+            if ($request->hasFile('foto')) {
+                $filenameWithExt = $request->file('foto')->getClientOriginalName();
+                $type = $request->file('foto')->getClientMimeType();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('foto')->getClientOriginalExtension();
+                $filenameSimpan = time() . '.' . $extension;
+                $size = $request->file('foto')->getSize();
+            } else {
+                return redirect()->back()->with('failed', 'Gambar Belum Masuk');
+            }
+
+            $validatedData = $this->validate($request, [
+                'id_halaman' => 'required',
+                'judul' => 'required|min:3',
+                'content' => 'required|min:3'
+            ]);
+
+            $validatedData['slug'] = Str::slug($validatedData['judul'], '-');
+
+            $file = File::FirstOrCreate([
+                'name' => $filenameSimpan,
+                'type' => $type,
+                'size' => $size
+            ]);
+
+            $validatedData['foto'] = $file->id;
+            $validatedData['user_id'] = Auth::user()->id;
+
+            $berita = Subhalaman::create($validatedData);
+            $request->file('foto')->move(public_path('file'), $filenameSimpan);
+
         }
-
-        $validatedData = $this->validate($request, [
-            'id_halaman' => 'required',
-            'judul' => 'required|min:3',
-            'content' => 'required|min:3'
-        ]);
-
-        $validatedData['slug'] = Str::slug($validatedData['judul'], '-');
-
-        $file = File::FirstOrCreate([
-            'name' => $filenameSimpan,
-            'type' => $type,
-            'size' => $size
-        ]);
-
-        $validatedData['foto'] = $file->id;
-        $validatedData['user_id'] = Auth::user()->id;
-
-        $berita = Subhalaman::create($validatedData);
-        $request->file('foto')->move(public_path('file'), $filenameSimpan);
 
         return redirect()->route('subhalaman.index')->with('success', 'Data Berhasil Ditambahkan');
     }
@@ -145,48 +171,70 @@ class SubhalamanController extends Controller
     {
         $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
-        $this->validate($request, [
-            'foto' => 'file|mimes:jpg,jpeg,bmp,png',
-            'judul' => 'required|min:3|max:255',
-            'content' => 'required|min:3',
-            'id_halaman' => 'required'
-        ]);
 
-        if ($request->hasFile('foto')) {
 
-            $filenameWithExt = $request->file('foto')->getClientOriginalName();
-            $type = $request->file('foto')->getClientMimeType();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('foto')->getClientOriginalExtension();
-            $filenameSimpan = time() . '.' . $extension;
-            $size = $request->file('foto')->getSize();
+        if ($request->link != "" && $subhalaman->link != "") {
 
-            $foto = File::where('id', $subhalaman->foto)->first();
-
-            unlink(public_path('file/' . $foto->name));
-
-            $request->file('foto')->move(public_path('file'), $filenameSimpan);
-
-            $file = File::FirstOrCreate([
-                'name' => $filenameSimpan,
-                'type' => $type,
-                'size' => $size
+            $this->validate($request, [
+                'judul' => 'required|min:3|max:255',
+                'id_halaman' => 'required',
+                'link' => 'required'
             ]);
 
             $subhalaman->update([
-                'foto' => $file->id,
                 'judul' => $request->judul,
-                'content' => $request->content,
+                'link' => $request->link,
                 'id_halaman' => $request->id_halaman
             ]);
 
         } else {
-            $subhalaman->update([
-                'judul' => $request->judul,
-                'content' => $request->content,
-                'id_halaman' => $request->id_halaman
+
+            $this->validate($request, [
+                'foto' => 'file|mimes:jpg,jpeg,bmp,png',
+                'judul' => 'required|min:3|max:255',
+                'content' => 'required|min:3',
+                'id_halaman' => 'required'
             ]);
+
+            if ($request->hasFile('foto')) {
+
+                $filenameWithExt = $request->file('foto')->getClientOriginalName();
+                $type = $request->file('foto')->getClientMimeType();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('foto')->getClientOriginalExtension();
+                $filenameSimpan = time() . '.' . $extension;
+                $size = $request->file('foto')->getSize();
+
+                $foto = File::where('id', $subhalaman->foto)->first();
+
+                unlink(public_path('file/' . $foto->name));
+
+                $request->file('foto')->move(public_path('file'), $filenameSimpan);
+
+                $file = File::FirstOrCreate([
+                    'name' => $filenameSimpan,
+                    'type' => $type,
+                    'size' => $size
+                ]);
+
+                $subhalaman->update([
+                    'foto' => $file->id,
+                    'judul' => $request->judul,
+                    'content' => $request->content,
+                    'id_halaman' => $request->id_halaman
+                ]);
+
+            } else {
+                $subhalaman->update([
+                    'judul' => $request->judul,
+                    'content' => $request->content,
+                    'id_halaman' => $request->id_halaman
+                ]);
+            }
+
         }
+
+
 
         return redirect()->back()->with('success', 'Data Berhasil Diubah');
     }
@@ -201,11 +249,11 @@ class SubhalamanController extends Controller
     {
         $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
-        // Untuk menghapus Foto yang terhubung sama berita
-        $foto = File::where('id', $subhalaman->foto)->first();
-        File::where('id', $subhalaman->foto)->delete();
-        unlink(public_path('file/' . $foto->name));
-        // akhir
+        if ($subhalaman->link == "") {
+            $foto = File::where('id', $subhalaman->foto)->first();
+            File::where('id', $subhalaman->foto)->delete();
+            unlink(public_path('file/' . $foto->name));
+        }
 
         Subhalaman::destroy($subhalaman);
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
