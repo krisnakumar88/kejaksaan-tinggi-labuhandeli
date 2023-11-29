@@ -69,7 +69,7 @@
                                             <div id="form-link">
                                                 <div class="form-group">
                                                     <label class="">Link</label>
-                                                    <input class="form-control @error('link') is-invalid @enderror" required
+                                                    <input class="form-control @error('link') is-invalid @enderror"
                                                         type="text" name="link" value="{{ old('link') }}">
                                                     @error('link')
                                                         <div class="invalid-feedback">
@@ -100,8 +100,7 @@
 
                                                 </div>
                                             </div>
-                                            <button class="btn btn-primary" type="submit" id="submit">Submit</button>
-
+                                            <button class="btn btn-primary" type="submit">Submit</button>
                                         </form>
                                     </div>
 
@@ -209,9 +208,11 @@
                                                     <div class="form-group">
                                                         <label class="">Link</label>
                                                         <input class="form-control @error('link') is-invalid @enderror"
-                                                            required type="text" name="link"
+                                                            type="text" name="link"
                                                             id="link-edit">
                                                     </div>
+                                                    <button class="btn btn-primary" type="submit"
+                                                    id="submit">Submit</button>
                                                 </div>
                                                 <div id="form-not-link-edit">
                                                     <hr>
@@ -234,11 +235,12 @@
                                                         <br>
 
                                                     </div>
+                                                    <button class="btn btn-primary" type="submit"
+                                                    id="submit">Submit</button>
                                                 </div>
 
-                                                <button class="btn btn-primary" type="submit"
-                                                    id="submit">Submit</button>
 
+                                            </form>
 
                                         </div>
                                     </div>

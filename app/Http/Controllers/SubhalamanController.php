@@ -43,8 +43,10 @@ class SubhalamanController extends Controller
     public function store(Request $request)
     {
 
+
         // dd($request);
-        if ($request->link != "") {
+        if ($request->link != null) {
+
 
             $validatedData = $this->validate($request, [
                 'id_halaman' => 'required',
@@ -96,6 +98,7 @@ class SubhalamanController extends Controller
 
             $validatedData['foto'] = $file->id;
             $validatedData['user_id'] = Auth::user()->id;
+            $validatedData['link'] = '';
 
             $berita = Subhalaman::create($validatedData);
             $request->file('foto')->move(public_path('file'), $filenameSimpan);
@@ -173,7 +176,7 @@ class SubhalamanController extends Controller
 
 
 
-        if ($request->link != "" && $subhalaman->link != "") {
+        if ($request->link != null && $subhalaman->link != "") {
 
             $this->validate($request, [
                 'judul' => 'required|min:3|max:255',
@@ -247,15 +250,18 @@ class SubhalamanController extends Controller
      */
     public function destroy($subhalaman)
     {
+
         $subhalaman = Subhalaman::where('id', $subhalaman)->first();
 
+
         if ($subhalaman->link == "") {
+
             $foto = File::where('id', $subhalaman->foto)->first();
             File::where('id', $subhalaman->foto)->delete();
             unlink(public_path('file/' . $foto->name));
         }
 
-        Subhalaman::destroy($subhalaman);
+        $subhalaman->delete();
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

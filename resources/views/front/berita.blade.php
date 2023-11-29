@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Semua Berita</h1>
+                    <h1>{{ $judul }}</h1>
 
                 </div>
             </div>
@@ -15,40 +15,39 @@
     <!-- End Breadcrumb -->
 
     <!-- Start Blog
-            ============================================= -->
+                ============================================= -->
     <div class="blog-area full-blog right-sidebar full-blog default-padding">
         <div class="container">
             <div class="row">
                 <div class="blog-items">
-                    <div class="blog-content col-md-12">
+                    <div class="blog-content col-md-8">
 
                         @foreach ($berita as $data)
                             <div class="single-item">
                                 <div class="item">
                                     <div class="thumb">
-                                        <a
-                                            href="{{ route('berita_detail', $data->slug) }}"><img
-                                                src="{{ asset("file") }}/{{ $data->file->name }}"
-                                                alt="Thumb"></a>
+                                        <a href="{{ route('berita_detail', $data->slug) }}"><img
+                                                src="{{ asset('file') }}/{{ $data->file->name }}" alt="Thumb"></a>
                                         <div class="date">
-                                            <h4><span>{{ $data->created_at->format('d') }}</span> {{ $data->created_at->format('M') }}, {{ $data->created_at->format('Y') }}</h4>
+                                            <h4><span>{{ $data->created_at->format('d') }}</span>
+                                                {{ $data->created_at->format('M') }}, {{ $data->created_at->format('Y') }}
+                                            </h4>
                                         </div>
                                     </div>
                                     <div class="info">
                                         <h3>
-                                            <a
-                                                href="{{ route('berita_detail', $data->slug) }}">{{ $data->judul }}</a>
+                                            <a href="{{ route('berita_detail', $data->slug) }}">{{ $data->judul }}</a>
                                         </h3>
                                         <p>
                                             {{ route('berita_detail', $data->slug) }} {{ $data->judul }}
                                         </p>
-                                        <a
-                                            href="{{ route('berita_detail', $data->slug) }}">Baca
+                                        <a href="{{ route('berita_detail', $data->slug) }}">Baca
                                             Selanjutnya <i class="fas fa-angle-double-right"></i></a>
                                         <div class="meta">
                                             <ul>
                                                 <li>
-                                                    <a href="#"><i class="fas fa-user"></i> {{ $data->user->name }}</a>
+                                                    <a href="#"><i class="fas fa-user"></i>
+                                                        {{ $data->user->name }}</a>
                                                 </li>
                                                 <li>
                                                     <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
@@ -60,194 +59,7 @@
                             </div>
                         @endforeach
 
-                        {{-- <div class="single-item">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat"><img
-                                            src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405076453.jpg"
-                                            alt="Thumb"></a>
-                                    <div class="date">
-                                        <h4><span>08</span> Nov, 2023</h4>
-                                    </div>
-                                </div>
-                                <div class="info">
-                                    <h3>
-                                        <a
-                                            href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat">Membangun
-                                            Legasi Kejaksaan Yang Lebih Dipercaya Masyarakat</a>
-                                    </h3>
-                                    <p>
-                                        https://kejati-sumaterautara.kejaksaan.go.id/Membangun Legasi Kejaksaan Yang
-                                        Lebih Dipercaya Masyarakat
-                                    </p>
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat">Baca
-                                        Selanjutnya <i class="fas fa-angle-double-right"></i></a>
-                                    <div class="meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fas fa-user"></i> Author</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-item">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/tim-tabur-kejati-sumut-dan-kejari-medan-amankan-dpo-terpidana-penipuan-rp-27-miliar"><img
-                                            src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405040057.jpg"
-                                            alt="Thumb"></a>
-                                    <div class="date">
-                                        <h4><span>08</span> Nov, 2023</h4>
-                                    </div>
-                                </div>
-                                <div class="info">
-                                    <h3>
-                                        <a
-                                            href="https://kejati-sumaterautara.kejaksaan.go.id/berita/tim-tabur-kejati-sumut-dan-kejari-medan-amankan-dpo-terpidana-penipuan-rp-27-miliar">Tim
-                                            Tabur Kejati Sumut dan Kejari Medan Amankan DPO Terpidana Penipuan Rp 2,7
-                                            Miliar</a>
-                                    </h3>
-                                    <p>
-                                        https://kejati-sumaterautara.kejaksaan.go.id/Tim Tabur Kejati Sumut dan Kejari
-                                        Medan Amankan DPO Terpidana Penipuan Rp 2,7 Miliar
-                                    </p>
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/tim-tabur-kejati-sumut-dan-kejari-medan-amankan-dpo-terpidana-penipuan-rp-27-miliar">Baca
-                                        Selanjutnya <i class="fas fa-angle-double-right"></i></a>
-                                    <div class="meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fas fa-user"></i> Author</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-item">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis"><img
-                                            src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405000030.jpg"
-                                            alt="Thumb"></a>
-                                    <div class="date">
-                                        <h4><span>08</span> Nov, 2023</h4>
-                                    </div>
-                                </div>
-                                <div class="info">
-                                    <h3>
-                                        <a
-                                            href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis">Kasi
-                                            Penkum dan Tim Ikuti Workshop Kehumasan, Humas Kejaksaan Adalah Jabatan
-                                            Strategis</a>
-                                    </h3>
-                                    <p>
-                                        https://kejati-sumaterautara.kejaksaan.go.id/Kasi Penkum dan Tim Ikuti Workshop
-                                        Kehumasan, Humas Kejaksaan Adalah Jabatan Strategis
-                                    </p>
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis">Baca
-                                        Selanjutnya <i class="fas fa-angle-double-right"></i></a>
-                                    <div class="meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fas fa-user"></i> Author</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-item">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/hingga-oktober-2023-kejati-sumut-tuntut-mati-83-terdakwa-narkotika"><img
-                                            src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699404961185.jpg"
-                                            alt="Thumb"></a>
-                                    <div class="date">
-                                        <h4><span>08</span> Nov, 2023</h4>
-                                    </div>
-                                </div>
-                                <div class="info">
-                                    <h3>
-                                        <a
-                                            href="https://kejati-sumaterautara.kejaksaan.go.id/berita/hingga-oktober-2023-kejati-sumut-tuntut-mati-83-terdakwa-narkotika">Hingga
-                                            Oktober 2023, Kejati Sumut Tuntut Mati 83 Terdakwa Narkotika</a>
-                                    </h3>
-                                    <p>
-                                        https://kejati-sumaterautara.kejaksaan.go.id/Hingga Oktober 2023, Kejati Sumut
-                                        Tuntut Mati 83 Terdakwa Narkotika
-                                    </p>
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/hingga-oktober-2023-kejati-sumut-tuntut-mati-83-terdakwa-narkotika">Baca
-                                        Selanjutnya <i class="fas fa-angle-double-right"></i></a>
-                                    <div class="meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fas fa-user"></i> Author</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="single-item">
-                            <div class="item">
-                                <div class="thumb">
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kembalikan-harmonisasi-di-tengah-masyarakat-kejati-sumut-hentikan-penuntutan-5-perkara-pendekatan-rj"><img
-                                            src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699404939026.jpg"
-                                            alt="Thumb"></a>
-                                    <div class="date">
-                                        <h4><span>08</span> Nov, 2023</h4>
-                                    </div>
-                                </div>
-                                <div class="info">
-                                    <h3>
-                                        <a
-                                            href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kembalikan-harmonisasi-di-tengah-masyarakat-kejati-sumut-hentikan-penuntutan-5-perkara-pendekatan-rj">Kembalikan
-                                            Harmonisasi di Tengah Masyarakat, Kejati Sumut Hentikan Penuntutan 5 Perkara
-                                            Pendekatan RJ</a>
-                                    </h3>
-                                    <p>
-                                        https://kejati-sumaterautara.kejaksaan.go.id/Kembalikan Harmonisasi di Tengah
-                                        Masyarakat, Kejati Sumut Hentikan Penuntutan 5 Perkara Pendekatan RJ
-                                    </p>
-                                    <a
-                                        href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kembalikan-harmonisasi-di-tengah-masyarakat-kejati-sumut-hentikan-penuntutan-5-perkara-pendekatan-rj">Baca
-                                        Selanjutnya <i class="fas fa-angle-double-right"></i></a>
-                                    <div class="meta">
-                                        <ul>
-                                            <li>
-                                                <a href="#"><i class="fas fa-user"></i> Author</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fas fa-comments"></i> 0 Komentar</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+
 
                         <!-- Pagination -->
 
@@ -321,7 +133,7 @@
                         </div>
                     </div>
                     <!-- Start Sidebar -->
-                    {{-- <div class="sidebar col-md-4">
+                    <div class="sidebar col-md-4">
                         <aside>
 
                             <!-- Start Sidebar Item -->
@@ -335,14 +147,12 @@
                                 </div>
                                 <div class="sidebar-info">
                                     <ul>
-                                        <li><a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kategori/1/berita-internal">
-                                                Berita Internal <span>579</span></a>
-                                        </li>
-                                        <li><a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kategori/2/kegiatan">
-                                                Kegiatan <span>636</span></a>
-                                        </li>
+                                        @foreach ($kategori as $data)
+                                            <li><a
+                                                    href="/kategori-berita/{{ $data->id }}">
+                                                    {{ $data->nama }} </a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -354,78 +164,43 @@
                                     <h4>Berita Terbaru</h4>
                                 </div>
 
+                                @foreach ($beritanew as $data)
+
                                 <div class="item">
                                     <div class="content">
                                         <div class="thumb">
                                             <a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat">
-                                                <img src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405076453.jpg"
+                                                href="{{ route('berita_detail', $data->slug) }}">
+                                                <img src="{{ asset('file') }}/{{ $data->file->name }}"
                                                     alt="Thumb">
                                             </a>
                                         </div>
                                         <div class="info">
                                             <h5>
                                                 <a
-                                                    href="https://kejati-sumaterautara.kejaksaan.go.id/berita/membangun-legasi-kejaksaan-yang-lebih-dipercaya-masyarakat">Membangun
-                                                    Legasi Kejaksaan Yang Lebih Dipercaya Masyarakat</a>
+                                                    href="{{ route('berita_detail', $data->slug) }}">{{ $data->judul }}</a>
                                             </h5>
                                             <div class="meta">
-                                                <i class="fas fa-user"></i><a href="#">Author</a>
+                                                <i class="fas fa-user"></i><a href="#">{{ $data->user->name }}</a></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="content">
-                                        <div class="thumb">
-                                            <a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/tim-tabur-kejati-sumut-dan-kejari-medan-amankan-dpo-terpidana-penipuan-rp-27-miliar">
-                                                <img src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405040057.jpg"
-                                                    alt="Thumb">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <h5>
-                                                <a
-                                                    href="https://kejati-sumaterautara.kejaksaan.go.id/berita/tim-tabur-kejati-sumut-dan-kejari-medan-amankan-dpo-terpidana-penipuan-rp-27-miliar">Tim
-                                                    Tabur Kejati Sumut dan Kejari Medan Amankan DPO Terpidana Penipuan
-                                                    Rp 2,7 Miliar</a>
-                                            </h5>
-                                            <div class="meta">
-                                                <i class="fas fa-user"></i><a href="#">Author</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="content">
-                                        <div class="thumb">
-                                            <a
-                                                href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis">
-                                                <img src="https://kejati-sumaterautara.kejaksaan.go.id/storage/media/202311/kejatisumut_1699405000030.jpg"
-                                                    alt="Thumb">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <h5>
-                                                <a
-                                                    href="https://kejati-sumaterautara.kejaksaan.go.id/berita/kasi-penkum-dan-tim-ikuti-workshop-kehumasan-humas-kejaksaan-adalah-jabatan-strategis">Kasi
-                                                    Penkum dan Tim Ikuti Workshop Kehumasan, Humas Kejaksaan Adalah
-                                                    Jabatan Strategis</a>
-                                            </h5>
-                                            <div class="meta">
-                                                <i class="fas fa-user"></i><a href="#">Author</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                @endforeach
+
+
+
+
+
+
 
 
                             </div>
                             <!-- End Sidebar Item -->
 
-                            <!-- Start Sidebar Item -->
-                            <div class="sidebar-item category">
+
+                            {{-- <div class="sidebar-item category">
                                 <div class="title">
                                     <h4>Arsip Berita</h4>
                                 </div>
@@ -489,9 +264,9 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- End Sidebar Item -->
 
-                            <!-- Start Sidebar Item -->
+
+
                             <div class="sidebar-item gallery">
                                 <div class="title">
                                     <h4>Galeri Photo</h4>
@@ -500,11 +275,11 @@
                                     <ul>
                                     </ul>
                                 </div>
-                            </div>
-                            <!-- End Sidebar Item -->
+                            </div> --}}
+
 
                         </aside>
-                    </div> --}}
+                    </div>
                     <!-- End Start Sidebar -->
                 </div>
             </div>

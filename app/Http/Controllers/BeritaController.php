@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\File;
+use App\Models\KategoriBerita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class BeritaController extends Controller
     public function index()
     {
         $send['data'] = Berita::all();
+        $send['kategori_berita'] = KategoriBerita::all();
         return view("admin.berita", $send);
     }
 
@@ -57,7 +59,8 @@ class BeritaController extends Controller
 
         $validatedData = $this->validate($request, [
             'judul' => 'required|min:3|max:255',
-            'content' => 'required|min:3'
+            'content' => 'required|min:3',
+            'kategori_id' => 'required'
         ]);
 
         $validatedData['slug'] = Str::slug($validatedData['judul'], '-');
@@ -174,13 +177,15 @@ class BeritaController extends Controller
             $berita->update([
                 'foto' => $file->id,
                 'judul' => $request->judul,
-                'content' => $request->content
+                'content' => $request->content,
+                'kategori_id' => $request->kategori_id
             ]);
 
         } else {
             $berita->update([
                 'judul' => $request->judul,
-                'content' => $request->content
+                'content' => $request->content,
+                'kategori_id' => $request->kategori_id
             ]);
         }
 
@@ -203,7 +208,7 @@ class BeritaController extends Controller
         unlink(public_path('file/' . $foto->name));
         // akhir
 
-        Berita::destroy($berita);
+        $berita->delete();
         return redirect()->back()->with('success', 'Data Berhasil Dihapus');
     }
 }

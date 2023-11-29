@@ -7,6 +7,7 @@ use App\Models\Pejabatstruktural;
 use App\Models\Daftarpencarian;
 use App\Models\Sambutanketua;
 use App\Models\Hubungi;
+use App\Models\KategoriBerita;
 use App\Models\Subhalaman;
 use Illuminate\Http\Request;
 
@@ -16,16 +17,40 @@ class FrontController extends Controller
         $send['getPejabat']         = Pejabatstruktural::all();
         $send['getDaftarpencarian'] = Daftarpencarian::all();
         $send['getKatasambutan']    = Sambutanketua::orderBy('id', 'desc')->first();
-        $send['beritaTerbaru']      = Berita::all()->take(3);
+        $send['beritaTerbaru']      = Berita::orderBy('id', 'desc')->get()->take(3);
 
         return view("front.index", $send);
     }
 
+    //
     public function berita(){
         $berita = Berita::paginate(10);
-        return view('front.berita', compact('berita'));
+
+        $judul = "Semua Berita";
+
+        $kategori = KategoriBerita::all();
+
+        $beritanew = Berita::orderBy('id', 'desc')->get()->take(3);
+
+        return view('front.berita', compact('berita', 'kategori', 'beritanew', 'judul'));
     }
 
+    public function kategori_berita($request){
+
+        $detail_kategori = KategoriBerita::where('id', $request)->first();
+
+        $judul = $detail_kategori->nama;
+
+        $berita = Berita::where('kategori_id', $request)->paginate(10);
+
+        $kategori = KategoriBerita::all();
+
+        $beritanew = Berita::orderBy('id', 'desc')->get()->take(3);
+
+        return view('front.berita', compact('berita', 'kategori', 'beritanew', 'judul'));
+    }
+
+    //
     public function berita_detail(Berita $berita){
 
         return view('front.berita_detail', compact('berita'));

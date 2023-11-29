@@ -11,7 +11,9 @@ use App\Http\Controllers\PejabatstrukturalController;
 use App\Http\Controllers\DaftarpencarianController;
 use App\Http\Controllers\SambutanketuaController;
 use App\Http\Controllers\HubungiController;
+use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\SubhalamanController;
+use App\Models\KategoriBerita;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,8 @@ Route::get('/', [FrontController::class,'index'])->name('halaman_utama');
 Route::get('/berita', [FrontController::class,'berita'])->name('front_berita');
 
 Route::get('/berita/{berita}', [FrontController::class, 'berita_detail'])->name('berita_detail');
+
+Route::get('/kategori-berita/{kategoriberita}', [FrontController::class, 'kategori_berita'])->name('kategori-berita');
 
 Route::get('/halaman/{subhalaman}', [FrontController::class, 'subhalaman'])->name('subhalaman');
 
@@ -63,3 +67,5 @@ Route::get('/hubungi', [FrontController::class,'hubungi'])->name('hubungi');
 Route::post('/hubungi', [FrontController::class,'pesan'])->name('pesan');
 
 Route::resource('/admin/hubungi', HubungiController::class);
+
+Route::resource('/admin/kategori-berita', KategoriBeritaController::class);

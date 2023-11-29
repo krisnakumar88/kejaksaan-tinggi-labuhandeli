@@ -50,7 +50,16 @@
                                                 @enderror
                                             </div>
                                             <hr>
-
+                                            <div class="form-group">
+                                                <label for="pilihhalaman">Kategori Berita</label>
+                                                <select class="form-control" name="kategori_id">
+                                                    @foreach ($kategori_berita as $berita_kat)
+                                                        <option value="{{ $berita_kat->id }}">{{ $berita_kat->nama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <hr>
                                             <div class="form-group">
                                                 <label class="">Foto</label>
                                                 <div class="custom-file">
@@ -159,7 +168,16 @@
 
                                                 </div>
                                                 <hr>
-
+                                                <div class="form-group">
+                                                    <label for="pilihhalaman">Kategori Berita</label>
+                                                    <select class="form-control" id="pilihkategoriberita" name="kategori_id">
+                                                        @foreach ($kategori_berita as $berita_kat)
+                                                            <option value="{{ $berita_kat->id }}">{{ $berita_kat->nama }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <hr>
                                                 <div class="form-group">
                                                     <label class="">Foto</label>
                                                     <div class="custom-file">
@@ -177,8 +195,6 @@
                                                     <button class="btn btn-primary" type="submit"
                                                         id="submit">Submit</button>
                                                 </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -230,6 +246,7 @@
                         $('#judul-edit').val(response.data.judul);
                         CKEDITOR.instances['konten-edit'].setData(response.data.content);
                         $("#form-update").attr("action", "/admin/berita/" + response.data.id);
+                        $('#pilihkategoriberita').val(response.data.kategori_id);
 
                         $('#modal-update').modal('show');
                     }
